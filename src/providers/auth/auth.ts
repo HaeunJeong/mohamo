@@ -1,4 +1,5 @@
-import firebase from 'firebase';
+//import firebase from 'firebase';
+import * as firebase from 'firebase';
 import { Injectable } from '@angular/core';
 //import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -12,36 +13,36 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AuthProvider {
 
-  constructor(){}
+  constructor() { }
 
-  loginUser(email:string, password:string):Promise<any>{
+  loginUser(email: string, password: string): Promise<any> {
     return firebase.auth().signInWithEmailAndPassword(email, password)
-    .then( user => {
-      return new Promise( (resolve, reject) => {
-      if (user) {
-      user.newPropertyIamCreating = "New value I'm adding";
-      resolve(user);
-      } else {
-      reject(Error);
-      }
-      });
+      .then(user => {
+        return new Promise((resolve, reject) => {
+          if (user) {
+            user.newPropertyIamCreating = "New value I'm adding";
+            resolve(user);
+          } else {
+            reject(Error);
+          }
+        });
       });
   }
 
-  signupUser(email:string, password:string):Promise<any>{
+  signupUser(email: string, password: string): Promise<any> {
     return firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(newUser => {
-      firebase.database().ref(`/userProfile/${newUser.uid}/email`)
-      .set(email)
-    }).catch(error => console.error(error));
+      .then(newUser => {
+        firebase.database().ref(`/userProfile/${newUser.uid}/email`)
+          .set(email)
+      }).catch(error => console.error(error));
   }
 
-  resetPassword(email:string):Promise<void>{
+  resetPassword(email: string): Promise<void> {
     return firebase.auth().sendPasswordResetEmail(email);
   }
 
-  logoutUser():Promise<void>{
-    const userId:string = firebase.auth().currentUser.uid;
+  logoutUser(): Promise<void> {
+    const userId: string = firebase.auth().currentUser.uid;
     firebase.database().ref(`/userProfile/${userId}`).off();
     return firebase.auth().signOut();
   }
