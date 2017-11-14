@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as firebase from 'firebase';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 @IonicPage()
 @Component({
@@ -10,7 +11,8 @@ import * as firebase from 'firebase';
 export class MeetingListPage {
 
   userId;
-  title_list: Array<any> = [];
+  title_list: Array<Meeting_Simple> = [];
+  //title_list:FirebaseListObservable<any[]>;
   
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.userId = firebase.auth().currentUser.uid;
@@ -23,8 +25,23 @@ export class MeetingListPage {
     var meeting_list=[];
     var mock_list =[];
 
-    //array에 그냥 push하는 게 아니라, {키:true} 이렇게 들어가야함
-    firebase.database().ref('/userProfile/' + this.userId + '/m_list').once('value').then(function(snapshot) {
+  //   firebase.database().ref('/userProfile/' + this.userId + '/m_list').once('value').then(function(snapshot) {
+  //     snapshot.forEach(function(childSnapshot){
+  //               temp = childSnapshot.key;
+  //               meeting_list.push(temp);
+  //       })
+  //       return meeting_list;
+  //   }).then(function(res){
+  //     res.forEach(function(key_){
+  //       firebase.database().ref('/allMeeting/'+key_+'/title').once('value', function(snapshot){
+  //         var title_:string = snapshot.val();
+  //         console.log('title: '+title_);
+  //         mock_list.push({title: title_});
+  //     });
+  //   },this);
+  // });
+
+      firebase.database().ref('/userProfile/' + this.userId + '/m_list').once('value').then(function(snapshot) {
       snapshot.forEach(function(childSnapshot){
                 temp = childSnapshot.key;
                 meeting_list.push(temp);
@@ -32,15 +49,25 @@ export class MeetingListPage {
         return meeting_list;
     }).then(function(res){
       res.forEach(function(key_){
+        var code_ = key_;
         firebase.database().ref('/allMeeting/'+key_+'/title').once('value', function(snapshot){
           var title_:string = snapshot.val();
           console.log('title: '+title_);
-          mock_list.push({title: title_});
+          mock_list.push({title: title_, code:code_});
       });
     },this);
   });
 
   this.title_list = mock_list;
+
+
+  // for(var i=0;i<mock_list.length;i++){
+  //   this.title_list.push(mock_list[i]);
+   
+  // }
+  // console.log(this.title_list);
+
+  
 
   }
 
@@ -79,4 +106,13 @@ export class MeetingListPage {
     console.log('ionViewDidLoad MeetingListPage');
   }
 
+  goMeetingPage(Meeting_Simple){
+
+    this.navCtrl.push("다희page", Meeting_Simple.code);
+  }
+
+}
+
+export class Meeting_Simple{
+  title:string; code:string;
 }
