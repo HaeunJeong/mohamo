@@ -108,7 +108,7 @@ export class MeetingListPage {
 
   goMeetingPage(Meeting_Simple){
 
-    this.navCtrl.push("다희page", Meeting_Simple.code);
+    this.navCtrl.push("다희page ", Meeting_Simple.code);
   }
 
 }
