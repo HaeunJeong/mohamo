@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as firebase from 'firebase';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { IndiPagePage } from '../indiPage/indiPage';
 
 @IonicPage()
 @Component({
@@ -107,8 +108,7 @@ export class MeetingListPage {
   }
 
   goMeetingPage(Meeting_Simple){
-
-    this.navCtrl.push("다희page ", Meeting_Simple.code);
+    this.navCtrl.push(IndiPagePage, Meeting_Simple.code);
   }
 
 }
