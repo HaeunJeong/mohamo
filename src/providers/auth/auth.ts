@@ -15,7 +15,7 @@ export class AuthProvider {
 
   constructor() { }
 
-  loginUser(email: string, password: string): Promise<any> {
+  loginUser(email: string, password: string): firebase.Promise<any> {
     return firebase.auth().signInWithEmailAndPassword(email, password)
       .then(user => {
         return new Promise((resolve, reject) => {
@@ -29,7 +29,7 @@ export class AuthProvider {
       });
   }
 
-  signupUser(email: string, password: string): Promise<any> {
+  signupUser(email: string, password: string): firebase.Promise<any> {
     return firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(newUser => {
         firebase.database().ref(`/userProfile/${newUser.uid}/email`)
@@ -37,11 +37,11 @@ export class AuthProvider {
       }).catch(error => console.error(error));
   }
 
-  resetPassword(email: string): Promise<void> {
+  resetPassword(email: string): firebase.Promise<any> {
     return firebase.auth().sendPasswordResetEmail(email);
   }
 
-  logoutUser(): Promise<void> {
+  logoutUser(): firebase.Promise<any> {
     const userId: string = firebase.auth().currentUser.uid;
     firebase.database().ref(`/userProfile/${userId}`).off();
     return firebase.auth().signOut();
