@@ -19,19 +19,34 @@
 
 <ion-content padding>
 
+ 
   <ion-list>
-    <ion-item *ngFor="let temp of title_list" (click)="goMeetingPage(temp)">
+ 
+    <!--현재 on-hold 가 안먹히는 상태임 -->
+    <ion-item *ngFor="let temp of title_list" on-hold="removeMeeting(temp)" 
+    (click)="goMeetingPage(temp)">
       <h2>{{temp.title}}</h2>
     </ion-item>
-</ion-list>
+
+    <!--
+    <ion-item-options side="right">
+        <button ion-button icon-only on-hold="removeMeeting(temp)" 
+        color="danger" class="button"><ion-icon name="trash"></ion-icon></button>
+    </ion-item-options>
+  -->
+
+  </ion-list>
+
 
 <div padding>
   <button ion-button color="primary" (click)="makeNewMeeting()" block>New Meeting</button>
 </div>
 
 <div padding>
-  
-  <ion-input [(ngModel)] = "inputString" type="text" placeholder="enter the code" id="code"></ion-input>
+  <ion-item clearInput = true>
+  <ion-input [(ngModel)] = "inputString" type="text"
+  placeholder="enter the code" id="code"></ion-input> 
+</ion-item>
   <button ion-button type="submit" (click)="enterMeeting(inputString)" block>Enter Meeting</button>
 </div>
 
