@@ -1,15 +1,9 @@
-import { Component , OnInit} from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FirebaseListObservable, AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 
-import { Member } from './member';
-import { MeetingInfo } from './meetingInfo';
-
 import * as firebase from 'firebase';
-
-//import { EditMeetingInfoPage } from '../edit-meeting-info/edit-meeting-info';
-//import { EditMeetingRulePage } from '../edit-meeting-rule/edit-meeting-rule';
 
 import { Geolocation } from '@ionic-native/geolocation';
 import { CurrentLoc } from '../../app/interfaces/current-loc';
@@ -17,7 +11,7 @@ import { CurrentLoc } from '../../app/interfaces/current-loc';
   selector: 'page-indiPage',
   templateUrl: 'indiPage.html'
 })
-export class IndiPagePage {//implements OnInit{
+export class IndiPagePage {
 
   afMtMembers: FirebaseListObservable<any[]>;
   meetingInfo: FirebaseListObservable<any[]>;
@@ -65,8 +59,7 @@ export class IndiPagePage {//implements OnInit{
         }
       });
     });
-    
-    
+
     //해당 미팅의 user 정보 (json) 전부 mtMemList에 담기 OK
     this.allUserProfile = af.list('/userProfile');
     this.afMtMembers = af.list('/allMeeting/' + this.meetingCode + '/member');
@@ -74,41 +67,49 @@ export class IndiPagePage {//implements OnInit{
     this.afMtMembers.subscribe(
       membersArray => {
 
-        this.mtMemList.splice(0, this.mtMemList.length);
-        
-        this.mtMemNames = membersArray;
+        var getThis= this;
+        async function resetMemList(){
+          await getThis.mtMemList.splice(0, getThis.mtMemList.length);
+          
+          await (getThis.mtMemNames = membersArray);
 
+          await getThis.allUserProfile.forEach(users => {
+            getThis.mtMemNames.forEach(memKeys => {
+              var temp;
+              temp = users.filter(user => user.$key == memKeys.$key);
+  
+              if (temp.length != 0) {
+                getThis.mtMemList.push(temp);
+              }
+            });
+          });
+        } 
+
+        resetMemList();
+
+       // this.mtMemNames = membersArray;
+/*
         this.allUserProfile.forEach(users => {
           this.mtMemNames.forEach(memKeys => {
-            this.mtMemList.push(users.filter(user => user.$key == memKeys.$key));
+            var temp;
+            temp = users.filter(user => user.$key == memKeys.$key);
+
+            if (temp.length != 0) {
+              this.mtMemList.push(temp);
+            }
           });
         });
-
+*/
       }
     );
 
     //해당 모임 약속 시간 정보 가져오기 OK
     this.meetingInfo = af.list('/allMeeting/' + this.meetingCode + '/infoToMeet');
-
   }
-/*
-  ngOnInit(){
-    this.af.database.ref('/allMeeting/' + this.meetingCode + '/member').once('value', (snapshot) => {
-      
-        this.allUserProfile.forEach(users => {
-         snapshot.forEach(memKeys => {
-            this.mtMemList.push(users.filter(user => user.$key == memKeys.key));
-            return false;
-          });
-        });
 
-      }
-    );
-  }
-*/
   //출석 위해 자기 이름 클릭시 발생하는 이벤트
   //미팅은 하루에 한번만 있는 걸로 가정. 
-  attendanceCheck(member: Member) {
+  attendanceCheck(member: any) {
 
     //본인 이름 클릭
     if (member.name == this.userName) {
@@ -144,8 +145,10 @@ export class IndiPagePage {//implements OnInit{
 
             //정해진 미팅시간 받아오기. 
             var dtSplit = snap.val().dateTime.split(" ");
+            var dSplit = dtSplit[0].split("-");
             var tSplit = dtSplit[1].split(":");
-            meetingDate = new Date(2017, 11, 14, tSplit[0], tSplit[1]);
+            
+            meetingDate = new Date(dSplit[0], dSplit[1], dSplit[2], tSplit[0], tSplit[1]);
             timeLeft = (meetingDate.getTime() - todayTemp.getTime()) / 60000;
 
             alert("해당 모임은 오늘 약속이 있습니다.");
@@ -222,8 +225,7 @@ export class IndiPagePage {//implements OnInit{
   }
 
   goEditMeetingInfoPage() {
-    //this.navCtrl.push(EditMeetingInfoPage);
-    console.log(this.mtMemList);
+   console.log(this.mtMemList);
   }
 
   goEditMeetingRulePage() {
