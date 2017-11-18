@@ -23,7 +23,6 @@ export class MypagePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
 
-    //this.userId = firebase.auth().currentUser.uid;
     var temp;
     var p_name = [];
     firebase.database().ref('/userProfile/' + this.key1 + '/name').once('value', function (snapshot) {
