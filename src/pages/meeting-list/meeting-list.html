@@ -1,0 +1,33 @@
+<!--
+  Generated template for the MeetingListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  
+    <ion-navbar color="primary">
+      <ion-title>Meeting List</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-left (click)="goHome()"><!-- goHome은 소정이가 만든페이지로-->
+          <ion-icon name="home"></ion-icon>MyPage
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  
+  </ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item *ngFor="let meeting of meeting_list | async" (click)="goMeetingPage(meeting)"
+              class = "block_list">
+      <h2>{{meeting.title}}</h2>
+    </ion-item>
+</ion-list>
+
+<div padding>
+  <button ion-button color="primary" (click)="newMeeting()" block>New Meeting</button>
+</div>
+
+</ion-content>
