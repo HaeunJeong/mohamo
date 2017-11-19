@@ -26,7 +26,7 @@ export class MatchingTimePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
 
-    this.meeting_code = "-KyuKa3Pe2mDZpcKaMIt";
+    this.meeting_code = navParams.data;
 
   }
 
@@ -45,7 +45,7 @@ export class MatchingTimePage {
     var meetingDate;
     var today = new Date();
     var m = today.getMonth() + 1;
-    var d = today.getDate()-1;
+    var d = today.getDate()-2;
     var mm = 'm_'+m;
     var dd = 'd_'+d;
 
@@ -61,7 +61,7 @@ export class MatchingTimePage {
       })
       return member_list;
     }).then(function(res){
-
+      
       //var num = member_list.length;
       // 각 member들의 스케쥴에 접근하여, 겹치는걸 조사
       
@@ -74,7 +74,7 @@ export class MatchingTimePage {
              //모든 시간들이 default false로 들어가 있다는 가정하에,
              //모든 member의 같은 날의 시간을 돌면서, 
              // 일정이 있는(==false가 아닌) key값들을 가져가다 arr에 넣는다.
-             
+             console.log("외않대");
              if(childSnapshot.val()){
                if(arr.indexOf(childSnapshot.key)==-1){
                   arr.push(childSnapshot.key);
@@ -108,6 +108,11 @@ export class MatchingTimePage {
   });
 
   this.times = total_time; // 일정이 없는 시간대만 남음.
+
+  }
+
+  goGoogleMap(){
+
 
   }
 
