@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ItemSliding  } from 'ionic-angular';
 import * as firebase from 'firebase';
 import { MatchingTimePage } from '../matching-time/matching-time';
+import { IndiPagePage } from '../indiPage/indiPage';
 //import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
