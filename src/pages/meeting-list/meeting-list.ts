@@ -107,7 +107,7 @@ export class MeetingListPage {
 
     let alert = this.alertCtrl
     let wantRemove = alert.create({
-      title: '모임방 삭제_',
+      title: '모임방 삭제',
       message: "해당 모임방에서 나가시겠습니까?",
       buttons: [
         {
