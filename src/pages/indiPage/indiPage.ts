@@ -2,19 +2,11 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FirebaseListObservable, AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-<<<<<<< HEAD
-
-import * as firebase from 'firebase';
-import { MatchingTimePage } from '../matching-time/matching-time';
-import { Geolocation } from '@ionic-native/geolocation';
-import { CurrentLoc } from '../../app/interfaces/current-loc';
-=======
 import * as firebase from 'firebase';
 import { Geolocation } from '@ionic-native/geolocation';
 import { CurrentLoc } from '../../app/interfaces/current-loc';
 import { MatchingTimePage } from '../matching-time/matching-time';
 
->>>>>>> GB
 @Component({
   selector: 'page-indiPage',
   templateUrl: 'indiPage.html'
@@ -36,10 +28,7 @@ export class IndiPagePage {
 
   meetingCode: string;
   meetingTitle: string = null;
-<<<<<<< HEAD
-=======
   geo;
->>>>>>> GB
 
   constructor(
     public navCtrl: NavController,
@@ -49,10 +38,7 @@ export class IndiPagePage {
 
     this.userId = firebase.auth().currentUser.uid;
     this.meetingCode = navParams.data;
-<<<<<<< HEAD
-=======
     this.geo = this.geolocation;
->>>>>>> GB
 
     let dataURL = this.af.database;
 
@@ -80,7 +66,6 @@ export class IndiPagePage {
     this.allUserProfile = af.list('/userProfile');
     this.afMtMembers = af.list('/allMeeting/' + this.meetingCode + '/member');
 
-<<<<<<< HEAD
 
     this.afMtMembers.subscribe(
       membersArray => {
@@ -90,34 +75,6 @@ export class IndiPagePage {
 
           this.mtMemList.splice(0, this.mtMemList.length);
 
-=======
-    this.afMtMembers.subscribe(
-      membersArray => {
-
-        var getThis= this;
-        async function resetMemList(){
-          await getThis.mtMemList.splice(0, getThis.mtMemList.length);
-          
-          await (getThis.mtMemNames = membersArray);
-
-          await getThis.allUserProfile.forEach(users => {
-            getThis.mtMemNames.forEach(memKeys => {
-              var temp;
-              temp = users.filter(user => user.$key == memKeys.$key);
-  
-              if (temp.length != 0) {
-                getThis.mtMemList.push(temp);
-              }
-            });
-          });
-        } 
-
-        resetMemList();
-
-       // this.mtMemNames = membersArray;
-/*
-        this.allUserProfile.forEach(users => {
->>>>>>> GB
           this.mtMemNames.forEach(memKeys => {
             var temp;
             temp = users.filter(user => user.$key == memKeys.$key);
@@ -127,10 +84,6 @@ export class IndiPagePage {
             }
           });
         });
-<<<<<<< HEAD
-=======
-*/
->>>>>>> GB
       }
     );
 
@@ -178,11 +131,6 @@ export class IndiPagePage {
             var dtSplit = snap.val().dateTime.split(" ");
             var dSplit = dtSplit[0].split("-");
             var tSplit = dtSplit[1].split(":");
-<<<<<<< HEAD
-
-=======
-            
->>>>>>> GB
             meetingDate = new Date(dSplit[0], dSplit[1], dSplit[2], tSplit[0], tSplit[1]);
             timeLeft = (meetingDate.getTime() - todayTemp.getTime()) / 60000;
 
@@ -211,13 +159,8 @@ export class IndiPagePage {
           } else {
 
             //현재 위치 얻어서 출석체크
-<<<<<<< HEAD
-            //현재 위치 얻기
-            this.geolocation.getCurrentPosition().then(pos => {
-=======
            // 현재 위치 얻기
             this.geo.getCurrentPosition().then(pos => {
->>>>>>> GB
               this.myCurrentLoc.lat = pos.coords.latitude;
               this.myCurrentLoc.lon = pos.coords.longitude;
               this.myCurrentLoc.timestamp = pos.timestamp;
