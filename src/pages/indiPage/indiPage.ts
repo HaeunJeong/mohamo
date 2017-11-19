@@ -64,32 +64,15 @@ export class IndiPagePage {
     this.allUserProfile = af.list('/userProfile');
     this.afMtMembers = af.list('/allMeeting/' + this.meetingCode + '/member');
 
+
     this.afMtMembers.subscribe(
       membersArray => {
+        this.mtMemNames = membersArray;
 
-        var getThis= this;
-        async function resetMemList(){
-          await getThis.mtMemList.splice(0, getThis.mtMemList.length);
-          
-          await (getThis.mtMemNames = membersArray);
-
-          await getThis.allUserProfile.forEach(users => {
-            getThis.mtMemNames.forEach(memKeys => {
-              var temp;
-              temp = users.filter(user => user.$key == memKeys.$key);
-  
-              if (temp.length != 0) {
-                getThis.mtMemList.push(temp);
-              }
-            });
-          });
-        } 
-
-        resetMemList();
-
-       // this.mtMemNames = membersArray;
-/*
         this.allUserProfile.forEach(users => {
+
+          this.mtMemList.splice(0, this.mtMemList.length);
+
           this.mtMemNames.forEach(memKeys => {
             var temp;
             temp = users.filter(user => user.$key == memKeys.$key);
@@ -99,7 +82,6 @@ export class IndiPagePage {
             }
           });
         });
-*/
       }
     );
 
@@ -147,7 +129,7 @@ export class IndiPagePage {
             var dtSplit = snap.val().dateTime.split(" ");
             var dSplit = dtSplit[0].split("-");
             var tSplit = dtSplit[1].split(":");
-            
+
             meetingDate = new Date(dSplit[0], dSplit[1], dSplit[2], tSplit[0], tSplit[1]);
             timeLeft = (meetingDate.getTime() - todayTemp.getTime()) / 60000;
 
@@ -207,25 +189,58 @@ export class IndiPagePage {
 
 
   removeMember() {
-    let test = this.af.database;
+    let intoToDelete = this.af.database.ref('/allMeeting/'+this.meetingCode+'/memToBeDeleted');
     let memTobeDeleted: FirebaseObjectObservable<any[]>;
     let toBeDeleted: string = prompt("누굴 삭제할까요");
 
-    test.ref('/member').once('value', (snapshot) => {
+    //삭제 멤버 존재 유무 확인
+    let exist = false;
+    this.mtMemList.forEach(mtMem => {
+      if (toBeDeleted == mtMem[0].name){
+        exist = true;
+        alert("다른 멤버가 승인시 삭제가 완료됩니다.");
+        return;
+      }
+    });
+
+    if(exist==false){
+      alert(toBeDeleted+"는(은) 이 미팅에 존재하지 않습니다.");
+      return;
+    }
+/*
+    //해당 멤버 존재시, DB에 삭제 요청 등록
+    //한 명의 삭제가 끝나기 전까지 다른 멤버 삭제 불가.(일단은)
+    intoToDelete.once('value', (snapshot) => {
+      if (!snapshot.exists()) {
+        let toBeDeleted: string = prompt("삭제 이유를 입력하세요.");
+        
+        snapshot.forEach(snap => {
+          if (snap.val().name == toBeDeleted) {
+            memTobeDeleted = this.af.object('/member/' + snap.key);
+            //memTobeDeleted.remove();
+            return false;
+          }
+        });
+      }else{
+        alert("")
+      }
+    })
+    
+    test.ref('/allMeeting/'+this.meetingCode).once('value', (snapshot) => {
       if (snapshot.exists()) {
         snapshot.forEach(snap => {
           if (snap.val().name == toBeDeleted) {
             memTobeDeleted = this.af.object('/member/' + snap.key);
-            memTobeDeleted.remove();
+            //memTobeDeleted.remove();
             return false;
           }
         });
       }
-    });
+    });*/
   }
 
   goEditMeetingInfoPage() {
-   console.log(this.mtMemList);
+    console.log(this.mtMemList);
   }
 
   goEditMeetingRulePage() {
