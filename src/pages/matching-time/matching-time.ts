@@ -45,7 +45,7 @@ export class MatchingTimePage {
     var meetingDate;
     var today = new Date();
     var m = today.getMonth() + 1;
-    var d = today.getDate()-1;
+    var d = today.getDate()-2;
     var mm = 'm_'+m;
     var dd = 'd_'+d;
 
@@ -109,6 +109,11 @@ export class MatchingTimePage {
 
   this.times = total_time; // 일정이 없는 시간대만 남음.
 
+  }
+
+  goGoogleMap(){
+    
+      console.log('googlemap'); 
   }
 
   ionViewDidLoad() {

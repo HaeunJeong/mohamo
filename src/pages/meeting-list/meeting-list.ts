@@ -4,6 +4,8 @@ import * as firebase from 'firebase';
 import { MatchingTimePage } from '../matching-time/matching-time';
 //import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { IndiPagePage } from '../indiPage/indiPage';
 
 @IonicPage()
 @Component({
@@ -136,8 +138,7 @@ export class MeetingListPage {
   }
 
   goMeetingPage(Meeting_Simple){
-
-    this.navCtrl.push(MatchingTimePage, Meeting_Simple.code);
+    this.navCtrl.push(IndiPagePage, Meeting_Simple.code);
   }
 
 }
