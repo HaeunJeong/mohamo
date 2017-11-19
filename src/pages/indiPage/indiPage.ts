@@ -96,6 +96,8 @@ export class IndiPagePage {
     //본인 이름 클릭
     if (member.name == this.userName) {
 
+      //기존에 출석 되어 있는지 체크 -> 해야해!
+
       let DBurl = this.af.database;
 
       //현재 시간 얻기
@@ -163,21 +165,24 @@ export class IndiPagePage {
               this.myCurrentLoc.lat = pos.coords.latitude;
               this.myCurrentLoc.lon = pos.coords.longitude;
               this.myCurrentLoc.timestamp = pos.timestamp;
-
+              console.log(this.myCurrentLoc.lat, this.myCurrentLoc.lon)
               return 1;
 
             }).then(temp => {
 
               //위도 좌표 값 비교해서 진짜 그 자리에 있는지 확인. 
-              DBurl.ref('/userProfile/' + this.userId + '/LatLonDiff/').set({
-                //미팅장소와 현재 장소와의 차이 절대값 계산
-                lat: Math.abs(this.myCurrentLoc.lat - mtLat),
-                lon: Math.abs(this.myCurrentLoc.lon - mtLon)
-              });
               if (Math.abs(this.myCurrentLoc.lat - mtLat) > 0.03 || Math.abs(this.myCurrentLoc.lon - mtLon) > 0.03) {
                 alert("당신은 모임 장소가 아닙니다. :( 어서 가세요!");
+              } else {
+                DBurl.ref('/userProfile/' + this.userId + '/LatLonDiff/').set({
+                  //미팅장소와 현재 장소와의 차이 절대값 계산
+                  lat: Math.abs(this.myCurrentLoc.lat - mtLat),
+                  lon: Math.abs(this.myCurrentLoc.lon - mtLon),
+                  meetingCode: this.meetingCode
+                  //출석 로그 남기기 ->해야 해. 
+                });
+                return false;
               }
-              return false;
             });
           }
         }
@@ -189,43 +194,56 @@ export class IndiPagePage {
 
 
   removeMember() {
-    let intoToDelete = this.af.database.ref('/allMeeting/'+this.meetingCode+'/memToBeDeleted');
+    let intoToDelete = this.af.database.ref('/allMeeting/' + this.meetingCode + '/memToBeDeleted');
     let memTobeDeleted: FirebaseObjectObservable<any[]>;
     let toBeDeleted: string = prompt("누굴 삭제할까요");
+    
+    if(toBeDeleted==null){
+      return false;
+    }
 
-    //삭제 멤버 존재 유무 확인
+    //1. 본인 이름을 입력했을 경우 기능 작동 x
+    if (toBeDeleted == this.userName) {
+      alert("본인입니다.\n 모임 나가기를 원하실 경우 하단의 \'모임탈퇴\'버튼을 눌러주세요.");
+      return false;
+    }
+
+    //2. 삭제 멤버 존재 유무 확인
     let exist = false;
     this.mtMemList.forEach(mtMem => {
-      if (toBeDeleted == mtMem[0].name){
+      if (toBeDeleted == mtMem[0].name) {
         exist = true;
-        alert("다른 멤버가 승인시 삭제가 완료됩니다.");
-        return;
+        //alert("다른 멤버가 승인시 삭제가 완료됩니다.");
       }
     });
 
-    if(exist==false){
-      alert(toBeDeleted+"는(은) 이 미팅에 존재하지 않습니다.");
-      return;
+    if (exist == false && toBeDeleted) {
+      alert(toBeDeleted + "는(은) 이 미팅에 존재하지 않습니다.");
+      return false;
     }
-/*
+
     //해당 멤버 존재시, DB에 삭제 요청 등록
     //한 명의 삭제가 끝나기 전까지 다른 멤버 삭제 불가.(일단은)
     intoToDelete.once('value', (snapshot) => {
       if (!snapshot.exists()) {
-        let toBeDeleted: string = prompt("삭제 이유를 입력하세요.");
-        
+        let reasonForDel: string = prompt("삭제 이유를 입력하세요.");
+
+        intoToDelete.push({ who: toBeDeleted, reason: reasonForDel, agreeCur: this.mtMemList.length-1, agreeMax: 0 });
+        /*
         snapshot.forEach(snap => {
           if (snap.val().name == toBeDeleted) {
             memTobeDeleted = this.af.object('/member/' + snap.key);
             //memTobeDeleted.remove();
             return false;
           }
-        });
-      }else{
-        alert("")
+        });*/
+        alert("다른 멤버가 승인시 삭제가 완료됩니다.");
+      } else {
+        alert("기존 멤버 삭제가 진행중입니다.\n해당 건이 끝난후 신청바랍니다.")
       }
     })
-    
+
+    /*
     test.ref('/allMeeting/'+this.meetingCode).once('value', (snapshot) => {
       if (snapshot.exists()) {
         snapshot.forEach(snap => {
@@ -244,9 +262,7 @@ export class IndiPagePage {
   }
 
   goEditMeetingRulePage() {
-    //this.navCtrl.push(EditMeetingRulePage);
-    //this.members.push({test:"t"});
-    //alert(this.members|async);
+    //민우가 작성 예정!
   }
 
 }
