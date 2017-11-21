@@ -19,6 +19,9 @@ import {AngularFireModule} from 'angularfire2';
 import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {Geolocation} from '@ionic-native/geolocation';
 
+import { GoogleMapPage } from '../pages/google-map/google-map';
+import { IonicPageModule } from 'ionic-angular';
+
 export const firebaseConfig = {
   apiKey: "AIzaSyCjOFpcA7N5PMu6TRb9V9o9IcEtRF2Rxp0",
   authDomain: "eventmanager-eff47.firebaseapp.com",
@@ -33,11 +36,13 @@ export const firebaseConfig = {
     MyApp,
     MeetingListPage,
     MatchingTimePage,
-    IndiPagePage
+    IndiPagePage,
+    GoogleMapPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicPageModule.forChild(GoogleMapPage),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule
   ],
@@ -46,7 +51,8 @@ export const firebaseConfig = {
     MyApp,
     MeetingListPage,
     MatchingTimePage,
-    IndiPagePage
+    IndiPagePage,
+    GoogleMapPage
   ],
   providers: [
     StatusBar,

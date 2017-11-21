@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MeetingListPage } from '../meeting-list/meeting-list';
 import * as firebase from 'firebase';
+import { GoogleMapPage } from '../google-map/google-map';
 
 /**
  * Generated class for the MatchingTimePage page.
@@ -113,7 +114,22 @@ export class MatchingTimePage {
 
   goGoogleMap(){
     
+    var myCallbackFunction = function(place){
+      return new Promise((resolve,rej)=>{
+        resolve();
+        console.log('장소이름'+place[0]);
+        console.log('lat'+place[1]);
+        console.log('lng'+place[2]);
+      })
+    }
+    
       console.log('googlemap'); 
+      this.navCtrl.push(GoogleMapPage, {
+        callback: myCallbackFunction
+      });
+
+      //firebase ('allMeeting/$meeting_code/infoToMeet/).push(key).
+      //그 아래에 child(place)하고 장소이름.
   }
 
   ionViewDidLoad() {

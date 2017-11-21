@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+    
+  <div id="floating-panel">
+    <b>위치: </b>
+
+
+    <ion-select [(ngModel)]="place" [selectedText]="OH" [selectOptions]="handong_place" [interface]="popover" (ionChange)="setHandongPlace()">
+        <ion-option value="item" *ngFor="let item of handong_place">{{item.title}}</ion-option> 
+      </ion-select>
+        
+
+      <!--
+    <select [(ngModel)]="start" id="start" (change)="setHandongPlace()">
+      <option value="os_hall">오석관</option>
+      <option value="stu_hall">학관</option>
+      <option value="hd_hall">현동홀</option>
+      <option value="nm_hall">느헤미아홀</option>
+      <option value="nt_hall">뉴턴홀</option>
+      <option value="ana_hall">올네이션스홀</option>
+    </select><br>
+
+  -->
+    </div>
+
+   
+    <div #map id="map"></div>
+</ion-content>
+<ion-footer>
+    <button ion-button block (click)= "setTitle()">Add</button>
+</ion-footer>
+
