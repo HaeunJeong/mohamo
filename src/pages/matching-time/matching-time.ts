@@ -24,6 +24,9 @@ export class MatchingTimePage {
   userId;
   meeting_code;
   times = [];
+  m_lat;
+  m_lng;
+  m_place;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
 
@@ -46,7 +49,7 @@ export class MatchingTimePage {
     var meetingDate;
     var today = new Date();
     var m = today.getMonth() + 1;
-    var d = today.getDate()-2;
+    var d = today.getDate()-2; //아직 17일만 넣어놔서 이거 조정해야함!
     var mm = 'm_'+m;
     var dd = 'd_'+d;
 
@@ -113,6 +116,8 @@ export class MatchingTimePage {
   }
 
   goGoogleMap(){
+
+    var getThis = this;
     
     var myCallbackFunction = function(place){
       return new Promise((resolve,rej)=>{
@@ -120,6 +125,9 @@ export class MatchingTimePage {
         console.log('장소이름'+place[0]);
         console.log('lat'+place[1]);
         console.log('lng'+place[2]);
+        getThis.m_lat = place[1];
+        getThis.m_lng = place[2];
+        getThis.m_place = place[0];
       })
     }
     
@@ -130,6 +138,23 @@ export class MatchingTimePage {
 
       //firebase ('allMeeting/$meeting_code/infoToMeet/).push(key).
       //그 아래에 child(place)하고 장소이름.
+      
+  }
+
+  addNewMeetingInfo(){
+
+    
+
+
+    console.log('설마'+this.m_lat);
+
+    var new_time = firebase.database().ref('/allMeeting/'+this.meeting_code).child('infoToMeet').push(true).key;
+    firebase.database().ref('/allMeeting/'+this.meeting_code+'/infoToMeet/'+new_time).child('LatLon').child('lat').set(this.m_lat);
+    firebase.database().ref('/allMeeting/'+this.meeting_code+'/infoToMeet/'+new_time).child('LatLon').child('lon').set(this.m_lng);
+    firebase.database().ref('/allMeeting/'+this.meeting_code+'/infoToMeet/'+new_time).child('dateTime').set('이건아직미정');
+    firebase.database().ref('/allMeeting/'+this.meeting_code+'/infoToMeet/'+new_time).child('place').set(this.m_place);
+
+    this.navCtrl.pop();
   }
 
   ionViewDidLoad() {

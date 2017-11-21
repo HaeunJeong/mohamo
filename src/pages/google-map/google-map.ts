@@ -2,8 +2,6 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, PopoverController } from 'ionic-angular';
 
 declare var google;
-// declare var cur_pos_lat;
-// declare var cur_pos_lng;
 
 /**
  * Generated class for the GoogleMapPage page.
@@ -27,18 +25,18 @@ export class GoogleMapPage {
   place_name;
   callback;
 
-  handong_place = [
-    {
-      title: 'OH',
-      lat: 12112,
-      lng: 2231
-    },
-    {
-      title: 'NTH',
-      lat: 34234,
-      lng: 34242
-    }
-  ]
+  // handong_place = [
+  //   {
+  //     title: 'OH',
+  //     lat: 12112,
+  //     lng: 2231
+  //   },
+  //   {
+  //     title: 'NTH',
+  //     lat: 34234,
+  //     lng: 34242
+  //   }
+  // ]
 
   constructor(public navCtrl: NavController, public alertCtrl: AlertController,
     public navParams: NavParams, public popoverCtrl: PopoverController) {
@@ -79,8 +77,6 @@ export class GoogleMapPage {
       marker.addListener('dragend', function (e) {
         marker.lat = e.latLng.lat();
         marker.lng = e.latLng.lng();
-        // temp_lat = marker.lat;
-        // temp_lng = marker.lng;
 
         this.map.setZoom(18);
         //this.map.setCenter(marker.getPosition());
@@ -93,97 +89,15 @@ export class GoogleMapPage {
         console.log('marker:' + marker.lat);
 
       });
-
-/*
-      marker.addListener('dblclick', function (j) {
-
-        // this.cur_pos_lat = temp_lat;
-        // this.cur_pos_lng = temp_lng;
-        // console.log('this??'+this.cur_pos_lat);
-        // this.setTitle();
-
-        temp_lat = marker.lat;
-        temp_lng = marker.lng;
-        console.log('this??' + temp_lat);
-
-
-        // this.cur_pos_lat = temp_lat;
-        // this.cur_pos_lng = temp_lng;
-        // console.log('cur'+this.cur_pos_lat);
-
-      });*/
     });
-
-   // this.cur_pos_lat = temp_lat;
-   // this.cur_pos_lng = temp_lng;
     console.log('cur' + this.cur_pos_lat);
   }
-  setHandongPlace() {
-    let popover = this.popoverCtrl.create('dfdf');
-    popover.present();
-    console.log('dd');
-  }
 
-  /*
-  //차선책으로, 직접 위도경도를 입력하게 함...
-  setTitle(){
-      let prompt = this.alertCtrl.create({
-        title: '장소명',
-        message: "장소명과 좌표를 뒤에보고 입력해줘라ㅠㅠ 받아올수가없어서 미안",
-        inputs: [
-          {
-            name:'title',
-            placeholder: 'place name'
-          },
-          {
-            name:'p_lat',
-            placeholder: '위도'
-          },
-          {
-            name:'p_lng',
-            placeholder: '경도'
-          }
-        ],
-        buttons:[
-          {
-            text:'Cancel',
-            handler: data => {
-              console.log('Cancel clicked');
-            }
-          },
-          {
-            text: 'complete',
-            handler: data => {
-              
-              if (data.title != '') {
-    
-                this.place_name = data.title;
-                this.cur_pos_lat = data.p_lat;
-                this.cur_pos_lng = data.p_lng;
-                this.callback([
-                  this.place_name, this.cur_pos_lat, this.cur_pos_lng 
-                ]).then(()=>{
-                  this.navCtrl.pop();
-                })
-  
-  
-  
-                //아니아니, 일단은 이 정보가 matching-time으로 넘어가서,
-                //거기서 complete를 할때 정보가 최종으로 push 되어야함.
-                console.log(this.place_name);
-  
-                //화면종료해야함
-                
-                }
-              }
-            }
-        ]
-      });
-    
-      prompt.present();
-      
-    }*/
-
+  // setHandongPlace() {
+  //   let popover = this.popoverCtrl.create('dfdf');
+  //   popover.present();
+  //   console.log('dd');
+  // }
 
   setTitle() {
     var ll = this.cur_pos_lat;
@@ -221,13 +135,9 @@ export class GoogleMapPage {
                 this.navCtrl.pop();
               })
 
-
-
               //일단은 이 정보가 matching-time으로 넘어가서,
               //거기서 complete를 할때 정보가 최종으로 push 되어야함.
               console.log(this.place_name);
-
-              //화면종료해야함
 
             }
           }
