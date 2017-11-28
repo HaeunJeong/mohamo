@@ -1,8 +1,8 @@
 {
-  "name": "Project1",
+  "name": "EventManager",
   "version": "0.0.1",
   "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "MeetingListPage": "http://ionicframework.com/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -12,27 +12,42 @@
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
-    "@angular/common": "5.0.0",
-    "@angular/compiler": "5.0.0",
-    "@angular/compiler-cli": "5.0.0",
-    "@angular/core": "5.0.0",
-    "@angular/forms": "5.0.0",
-    "@angular/http": "5.0.0",
-    "@angular/platform-browser": "5.0.0",
-    "@angular/platform-browser-dynamic": "5.0.0",
-    "@ionic-native/core": "4.3.2",
-    "@ionic-native/splash-screen": "4.3.2",
-    "@ionic-native/status-bar": "4.3.2",
-    "@ionic/storage": "2.1.3",
-    "ionic-angular": "3.9.2",
+    "@angular/common": "4.4.3",
+    "@angular/compiler": "4.4.3",
+    "@angular/compiler-cli": "4.4.3",
+    "@angular/core": "4.4.3",
+    "@angular/forms": "4.4.3",
+    "@angular/http": "4.4.3",
+    "@angular/platform-browser": "4.4.3",
+    "@angular/platform-browser-dynamic": "4.4.3",
+    "@ionic-native/camera": "^4.3.1",
+    "@ionic-native/core": "4.3.0",
+    "@ionic-native/geolocation": "^4.4.2",
+    "@ionic-native/splash-screen": "4.3.0",
+    "@ionic-native/status-bar": "4.3.0",
+    "@ionic/storage": "2.0.1",
+    "angular2-highcharts": "^0.5.5",
+    "angularfire2": "^4.0.0-rc.0",
+    "cordova-plugin-camera": "^2.4.1",
+    "cordova-plugin-geolocation": "^3.0.0",
+    "firebase": "^3.9.0",
+    "ionic-angular": "3.7.1",
     "ionicons": "3.0.0",
-    "rxjs": "5.5.2",
+    "rxjs": "5.4.3",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.18"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.1.0",
-    "typescript": "2.4.2"
+    "@ionic/app-scripts": "3.0.0",
+    "typescript": "2.3.4"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-camera": {},
+      "cordova-plugin-geolocation": {
+        "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
+      }
+    }
+  }
 }
