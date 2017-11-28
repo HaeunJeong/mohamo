@@ -1,5 +1,9 @@
 /**
+<<<<<<< HEAD
  * Check out https://googlechrome.github.io/sw-toolbox/ for
+=======
+ * Check out https://googlechromelabs.github.io/sw-toolbox/ for
+>>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
  * more info on how to use sw-toolbox to custom configure your service worker.
  */
 
@@ -24,7 +28,11 @@ self.toolbox.precache(
 );
 
 // dynamically cache any other local assets
+<<<<<<< HEAD
 self.toolbox.router.any('/*', self.toolbox.cacheFirst);
+=======
+self.toolbox.router.any('/*', self.toolbox.fastest);
+>>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
 
 // for any other requests go to the network, cache,
 // and then only use that cached resource if your user goes offline

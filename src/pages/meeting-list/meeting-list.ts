@@ -1,10 +1,22 @@
 import { Component } from '@angular/core';
+<<<<<<< HEAD
 import { IonicPage, NavController, NavParams, AlertController, ItemSliding  } from 'ionic-angular';
 import * as firebase from 'firebase';
 import { MatchingTimePage } from '../matching-time/matching-time';
 import { IndiPagePage } from '../indiPage/indiPage';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { MemberinfoPage } from '../memberinfo/memberinfo';
+=======
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import * as firebase from 'firebase';
+
+/**
+ * Generated class for the MeetingListPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+>>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
 
 @IonicPage()
 @Component({
@@ -14,6 +26,7 @@ import { MemberinfoPage } from '../memberinfo/memberinfo';
 export class MeetingListPage {
 
   userId;
+<<<<<<< HEAD
   title_list: Array<Meeting_Simple> = [];
   //title_list:FirebaseListObservable<any[]>;
   
@@ -131,11 +144,45 @@ export class MeetingListPage {
 
     wantRemove.present();
   }
+=======
+  a;
+  meeting_list = [];
+  database = firebase.database();
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.userId = firebase.auth().currentUser.uid;
+
+    console.log(this.userId);
+
+    /*
+    this.database.ref('/userProfile/' + this.userId+'/m_list').once('value', (snapshot)=>{
+      console.log(snapshot.val());
+      snapshot.forEach(snap=>{
+        console.log(snap.key);
+
+        return false;
+      })
+    });
+*/
+
+    /*
+    this.database.ref('/userProfile/' + this.userId).once('value')
+          .then((snapshot)=>{ 
+            snapshot.val().m_list.forEach(snap=>this.a=snap)}
+            
+      );*/
+
+    
+    
+  }
+
+>>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MeetingListPage');
   }
 
+<<<<<<< HEAD
   goMeetingPage(Meeting_Simple){
     this.navCtrl.push(IndiPagePage, Meeting_Simple.code);
   }
@@ -150,3 +197,6 @@ export class MeetingListPage {
 export class Meeting_Simple{
   title:string; code:string;
 }
+=======
+}
+>>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
