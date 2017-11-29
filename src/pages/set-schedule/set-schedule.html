@@ -9,78 +9,68 @@
 <ion-content>
 
   <table align="center" id="tableID" border="1">
-    <th>
+
+      <th>
+          <br>
+          <tr *ngFor="let schedule of schedules_sun">
+             <button>{{schedule.time}}
+            </button>
+          </tr>
+        </th>
+
+    <th>일
       <tr *ngFor="let schedule of schedules_sun">
-        <button class="btn" [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
+         <button [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
           {{schedule.date}}
-          <br>{{schedule.day}}
-          <br>{{schedule.time}}
 
         </button>
       </tr>
     </th>
 
-    <th>
+    <th>월
       <tr *ngFor="let schedule of schedules_mon">
-        <button class="btn" [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
+         <button [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
           {{schedule.date}}
-          <br>{{schedule.day}}
-          <br>{{schedule.time}}
-
         </button>
       </tr>
     </th>
 
-    <th>
+    <th>화
       <tr *ngFor="let schedule of schedules_tue">
-        <button class="btn" [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
+         <button [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
           {{schedule.date}}
-          <br>{{schedule.day}}
-          <br>{{schedule.time}}
-
         </button>
       </tr>
     </th>
 
-    <th>
+    <th>수
       <tr *ngFor="let schedule of schedules_wed">
-        <button class="btn" [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
+         <button [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
           {{schedule.date}}
-          <br>{{schedule.day}}
-          <br>{{schedule.time}}
-
         </button>
       </tr>
     </th>
 
-    <th>
+    <th>목
       <tr *ngFor="let schedule of schedules_thu">
-        <button class="btn" [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
+         <button [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
           {{schedule.date}}
-          <br>{{schedule.day}}
-          <br>{{schedule.time}}
-
         </button>
       </tr>
     </th>
 
-    <th>
+    <th>금
       <tr *ngFor="let schedule of schedules_fri">
-        <button class="btn" [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
+         <button [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
           {{schedule.date}}
-          <br>{{schedule.day}}
-          <br>{{schedule.time}}
-
         </button>
       </tr>
     </th>
 
-    <th>
+    <th>토
       <tr *ngFor="let schedule of schedules_sat">
-        <button class="btn" [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
+         <button [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
           {{schedule.date}}
-          <br>{{schedule.day}}
-          <br>{{schedule.time}}
         </button>
       </tr>
     </th>

@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{meetingTitle}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p *ngFor="let mInfo of meetingInfo |async">
+    {{mInfo.place}}<br> {{mInfo.dateTime}}
+  </p>
+  <ion-list>
+    
+    <ion-item *ngFor="let mtMem of mtMemList" (click)="attendanceCheck(mtMem[0])">
+
+      <ion-avatar item-start *ngIf="mtMem[0].LatLonDiff.meetingCode==meetingCode&&mtMem[0].LatLonDiff.lat<=0.03&&mtMem[0].LatLonDiff.lon<=0.03">
+        <img src="../../assets/imgs/smile.png">
+      </ion-avatar>
+      <ion-avatar item-start *ngIf="mtMem[0].LatLonDiff.meetingCode!=meetingCode||mtMem[0].LatLonDiff.lat>0.03||mtMem[0].LatLonDiff.lon>0.03">
+        <img src="../../assets/imgs/emptyCircle.png">
+      </ion-avatar>
+      {{mtMem[0].name}}
+
+    </ion-item>
+  </ion-list>
+  
+  <button ion-button color="primary" (click)="goEditMeetingRulePage()">규칙 설정</button>
+  <button ion-button color="primary" (click)="removeMember()">멤버 삭제</button>
+  <button block ion-button color="primary" (click)="goEditMeetingInfoPage()">모임 시간&장소 정하기</button>
+
+</ion-content>

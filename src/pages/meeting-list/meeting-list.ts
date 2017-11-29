@@ -4,8 +4,7 @@ import * as firebase from 'firebase';
 import { MatchingTimePage } from '../matching-time/matching-time';
 import { IndiPagePage } from '../indiPage/indiPage';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import { MypagePage } from '../mypage/mypage';
-
+import { MypageSchedulePage } from '../pages/mypage-schedule/mypage-schedule';
 
 @IonicPage()
 @Component({
@@ -49,9 +48,7 @@ export class MeetingListPage {
   this.title_list = mock_list;
 
   }
-goHome(){
-  this.navCtrl.push(MypagePage);
-}
+
   makeNewMeeting() {
 
     let newMeetingKey, meeting_title: string;
@@ -141,6 +138,11 @@ goHome(){
 
   goMeetingPage(Meeting_Simple){
     this.navCtrl.push(IndiPagePage, Meeting_Simple.code);
+  }
+
+  goHome()
+  {
+    this.navCtrl.push(MypageSchedulePage);
   }
 
 }

@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { MeetingListPage } from '../pages/meeting-list/meeting-list';
 import { MatchingTimePage } from '../pages/matching-time/matching-time';
+import { RulePage } from '../pages/rule/rule';
 import * as firebase from 'firebase';
 
 @Component({

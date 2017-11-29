@@ -22,10 +22,14 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleMapPage } from '../pages/google-map/google-map';
 import { IonicPageModule } from 'ionic-angular';
 
-import { MypagePage } from '../pages/mypage/mypage';
+import { RulePage } from '../pages/rule/rule';
+import { MemberinfoPage } from '../pages/memberinfo/memberinfo';
+import { ChartModule } from 'angular2-highcharts';
+import * as highcharts from 'Highcharts';
+
+import { MypageSchedulePage } from '../pages/mypage-schedule/mypage-schedule';
 import { SetSchedulePage } from '../pages/set-schedule/set-schedule';
 import { SetTodoPage } from '../pages/set-todo/set-todo'
-
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCjOFpcA7N5PMu6TRb9V9o9IcEtRF2Rxp0",
@@ -43,7 +47,9 @@ export const firebaseConfig = {
     MatchingTimePage,
     IndiPagePage,
     GoogleMapPage,
-    MypagePage,
+    RulePage,
+    MemberinfoPage,
+    MypageSchedulePage,
     SetSchedulePage,
     SetTodoPage
   ],
@@ -52,7 +58,8 @@ export const firebaseConfig = {
     IonicModule.forRoot(MyApp),
     IonicPageModule.forChild(GoogleMapPage),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    ChartModule.forRoot(highcharts)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -61,7 +68,9 @@ export const firebaseConfig = {
     MatchingTimePage,
     IndiPagePage,
     GoogleMapPage,
-    MypagePage,
+    RulePage,
+    MemberinfoPage,
+    MypageSchedulePage,
     SetSchedulePage,
     SetTodoPage
   ],
