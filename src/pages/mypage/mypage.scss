@@ -1,0 +1,31 @@
+page-mypage {
+    table.type01 {
+        border-collapse: collapse;
+        text-align: left;
+        line-height: 1.5;
+        margin : 20px 10px;
+    }
+    table.type01 th {
+        width: 150px;
+        padding: 10px;
+        font-weight: bold;
+        vertical-align: top;
+        border: 1px solid #ccc;
+    }
+    table.type01 td {
+        width: 200px;
+        padding: 10px;
+        vertical-align: top;
+        border: 1px solid #ccc;
+    }
+}
+
+.buttonBackground { 
+    background-color: "primary";
+ }
+
+ .btn {
+    //height: 40px;
+    width: 55px;
+  }
+ 

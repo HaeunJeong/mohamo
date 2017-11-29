@@ -1,0 +1,91 @@
+<ion-header>
+  
+    <ion-navbar>
+      <ion-title>Set Todo</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  <ion-content>
+  
+    <table align="center" id="tableID" border="1">
+      <th>
+        <tr *ngFor="let schedule of schedules_sun">
+          <button class="btn" [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
+            {{schedule.date}}
+            <br>{{schedule.day}}
+            <br>{{schedule.time}}
+            <br>{{schedule.value}}
+          </button>
+        </tr>
+      </th>
+  
+      <th>
+        <tr *ngFor="let schedule of schedules_mon">
+          <button class="btn" [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
+            {{schedule.date}}
+            <br>{{schedule.day}}
+            <br>{{schedule.time}}
+            <br>{{schedule.value}}
+          </button>
+        </tr>
+      </th>
+  
+      <th>
+        <tr *ngFor="let schedule of schedules_tue">
+          <button class="btn" [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
+            {{schedule.date}}
+            <br>{{schedule.day}}
+            <br>{{schedule.time}}
+            <br>{{schedule.value}}
+          </button>
+        </tr>
+      </th>
+  
+      <th>
+        <tr *ngFor="let schedule of schedules_wed">
+          <button class="btn" [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
+            {{schedule.date}}
+            <br>{{schedule.day}}
+            <br>{{schedule.time}}
+            <br>{{schedule.value}}
+          </button>
+        </tr>
+      </th>
+  
+      <th>
+        <tr *ngFor="let schedule of schedules_thu">
+          <button class="btn" [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
+            {{schedule.date}}
+            <br>{{schedule.day}}
+            <br>{{schedule.time}}
+            <br>{{schedule.value}}
+          </button>
+        </tr>
+      </th>
+  
+      <th>
+        <tr *ngFor="let schedule of schedules_fri">
+          <button class="btn" [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
+            {{schedule.date}}
+            <br>{{schedule.day}}
+            <br>{{schedule.time}}
+            <br>{{schedule.value}}
+          </button>
+        </tr>
+      </th>
+  
+      <th>
+        <tr *ngFor="let schedule of schedules_sat">
+          <button class="btn" [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
+            {{schedule.date}}
+            <br>{{schedule.day}}
+            <br>{{schedule.time}}
+            <br>{{schedule.value}}
+          </button>
+        </tr>
+      </th>
+    </table>
+  
+    <button ion-button (click)="addSchedule()"> 수정완료 </button>
+  </ion-content>
