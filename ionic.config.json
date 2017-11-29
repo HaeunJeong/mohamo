@@ -1,15 +1,8 @@
 {
-<<<<<<< HEAD
   "name": "EventManager",
   "app_id": "dae0bfa4",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
   }
-=======
-  "name": "SettingPage",
-  "app_id": "95a147e6",
-  "type": "ionic-angular",
-  "integrations": {}
->>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
 }

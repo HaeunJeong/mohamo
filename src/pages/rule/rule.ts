@@ -106,7 +106,7 @@ export class RulePage {
   }
 
   ionViewDidEnter()
-  {
+  {//firebase에서 데이터 불러오기(총벌점, 지각, 지각벌점, 조퇴벌점, 무단결석벌점)
     var penalty_score_temp = [];
     
     firebase.database().ref('/allMeeting/' + this.meetingCode +'/penalty_score').once('value').then(function(snapshot){
@@ -165,6 +165,7 @@ export class RulePage {
       }); 
     });
 
+    //멤버마다 데이터로 현재 벌점 수치 확인하기(아직 진행중)
     this.penalty_absence = absence_temp;
     
     this.chartOptions = {
@@ -250,7 +251,9 @@ export class RulePage {
     console.log("데이타보여줘제발", this.navParams.get('godata'))
   }
 
+  //규칙 리셋
   resetRuleSetting() {
+    firebase.database().ref('/allMeeting/'+this.meetingCode).child('setting_late').remove();
     firebase.database().ref('/allMeeting/'+this.meetingCode).child('penalty_score').remove();
     firebase.database().ref('/allMeeting/'+this.meetingCode).child('penalty_late').remove();
     firebase.database().ref('/allMeeting/'+this.meetingCode).child('penalty_early_leave').remove();

@@ -19,7 +19,6 @@
 
 <ion-content padding>
 
-<<<<<<< HEAD
  
   <ion-list>
  
@@ -49,17 +48,6 @@
   placeholder="enter the code" id="code"></ion-input> 
 </ion-item>
   <button ion-button type="submit" (click)="enterMeeting(inputString)" block>Enter Meeting</button>
-=======
-  <ion-list>
-    <ion-item *ngFor="let meeting of meeting_list | async" (click)="goMeetingPage(meeting)"
-              class = "block_list">
-      <h2>{{meeting.title}}</h2>
-    </ion-item>
-</ion-list>
-
-<div padding>
-  <button ion-button color="primary" (click)="newMeeting()" block>New Meeting</button>
->>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
 </div>
 
 </ion-content>

@@ -1,15 +1,8 @@
 {
-<<<<<<< HEAD
   "name": "EventManager",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "MeetingListPage": "http://ionicframework.com/",
-=======
-  "name": "SettingPage",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
->>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -19,7 +12,6 @@
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@angular/common": "4.4.3",
     "@angular/compiler": "4.4.3",
     "@angular/compiler-cli": "4.4.3",
@@ -42,31 +34,10 @@
     "ionic-angular": "3.7.1",
     "ionicons": "3.0.0",
     "rxjs": "5.4.3",
-=======
-    "@angular/common": "5.0.0",
-    "@angular/compiler": "5.0.0",
-    "@angular/compiler-cli": "5.0.0",
-    "@angular/core": "5.0.0",
-    "@angular/forms": "5.0.0",
-    "@angular/http": "5.0.0",
-    "@angular/platform-browser": "5.0.0",
-    "@angular/platform-browser-dynamic": "5.0.0",
-    "@ionic-native/core": "4.3.2",
-    "@ionic-native/splash-screen": "4.3.2",
-    "@ionic-native/status-bar": "4.3.2",
-    "@ionic/storage": "2.1.3",
-    "angularfire2": "^4.0.0-rc0",
-    "angularfire2-offline": "^4.3.1",
-    "firebase": "^3.9.0",
-    "ionic-angular": "3.9.2",
-    "ionicons": "3.0.0",
-    "rxjs": "5.5.2",
->>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.18"
   },
   "devDependencies": {
-<<<<<<< HEAD
     "@ionic/app-scripts": "3.0.0",
     "typescript": "2.3.4"
   },
@@ -79,10 +50,4 @@
       }
     }
   }
-=======
-    "@ionic/app-scripts": "3.1.0",
-    "typescript": "2.4.2"
-  },
-  "description": "An Ionic project"
->>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
 }

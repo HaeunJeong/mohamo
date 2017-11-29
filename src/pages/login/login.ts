@@ -8,18 +8,9 @@ import {
   Alert,
   AlertController } from 'ionic-angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-<<<<<<< HEAD
 import { EmailValidator } from '../../validators/email';
 import { AuthProvider } from '../../providers/auth/auth';
 import { MeetingListPage } from '..//meeting-list/meeting-list';
-=======
-
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-//import { EmailValidator } from '../../validators/email';
-//import { AuthProvider } from '../../providers/auth/auth';
-//import { MeetingListPage } from '..//meeting-list/meeting-list';
->>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
 /**
  * Generated class for the LoginPage page.
  *
@@ -33,11 +24,6 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-<<<<<<< HEAD
-
-=======
-/*
->>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
   public loginForm:FormGroup;
   public loading:Loading;
 
@@ -46,15 +32,9 @@ export class LoginPage {
     public authProvider:AuthProvider, formBuilder:FormBuilder) {
 
       this.loginForm = formBuilder.group({
-<<<<<<< HEAD
         email: ['nicehe74@gmail.com', Validators.compose([Validators.required,
         EmailValidator.isValid])],
         password: ['dkwkdkwk77', Validators.compose([Validators.required,
-=======
-        email: ['21300709@handong.edu', Validators.compose([Validators.required,
-        EmailValidator.isValid])],
-        password: ['123456', Validators.compose([Validators.required,
->>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
         Validators.minLength(6)])]
         });
    
@@ -97,9 +77,5 @@ export class LoginPage {
   }
   goToResetPassword():void {
       this.navCtrl.push('ResetPasswordPage');
-<<<<<<< HEAD
   }
-=======
-  }*/
->>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
 }
