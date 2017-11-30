@@ -1,14 +1,5 @@
 {
-<<<<<<< HEAD
-  "name": "EventManager",
-  "app_id": "dae0bfa4",
-  "type": "ionic-angular",
-  "integrations": {
-    "cordova": {}
-  }
-=======
   "name": "teamProject",
   "app_id": "",
   "type": "ionic-angular"
->>>>>>> sj
 }

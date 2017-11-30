@@ -18,21 +18,12 @@ export class MyApp {
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
 
     firebase.initializeApp({
-<<<<<<< HEAD
-      apiKey: "AIzaSyD64TztBapH_VB2-5YOUIJA3XeZFD-KzYk",
-      authDomain: "term-project-setting.firebaseapp.com",
-      databaseURL: "https://term-project-setting.firebaseio.com",
-      projectId: "term-project-setting",
-      storageBucket: "term-project-setting.appspot.com",
-      messagingSenderId: "699164986456"
-=======
       apiKey: "AIzaSyCjOFpcA7N5PMu6TRb9V9o9IcEtRF2Rxp0",
       authDomain: "eventmanager-eff47.firebaseapp.com",
       databaseURL: "https://eventmanager-eff47.firebaseio.com",
       projectId: "eventmanager-eff47",
       storageBucket: "eventmanager-eff47.appspot.com",
       messagingSenderId: "212380439220"
->>>>>>> sj
     });
 
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
