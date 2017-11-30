@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> sj
 This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
 
 ## How to use this template
@@ -25,6 +28,9 @@ $ ionic cordova run ios
 
 Substitute ios for android if not on a Mac.
 
+<<<<<<< HEAD
 =======
 ### :point_right: This starter repo has moved to the [ionic-team/starters](https://github.com/ionic-team/starters/tree/master/ionic-angular/official/blank) repo! :point_left:
 >>>>>>> 6274faa27e80f442b180322a535cb0a67b5c0e36
+=======
+>>>>>>> sj

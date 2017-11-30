@@ -1,8 +1,15 @@
 {
+<<<<<<< HEAD
   "name": "EventManager",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "MeetingListPage": "http://ionicframework.com/",
+=======
+  "name": "teamProject",
+  "version": "0.0.1",
+  "author": "Ionic Framework",
+  "homepage": "http://ionicframework.com/",
+>>>>>>> sj
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -12,6 +19,7 @@
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@angular/common": "4.4.3",
     "@angular/compiler": "4.4.3",
     "@angular/compiler-cli": "4.4.3",
@@ -32,12 +40,28 @@
     "cordova-plugin-geolocation": "^3.0.0",
     "firebase": "^3.9.0",
     "ionic-angular": "3.7.1",
+=======
+    "@angular/common": "4.4.4",
+    "@angular/compiler": "4.4.4",
+    "@angular/compiler-cli": "4.4.4",
+    "@angular/core": "4.4.4",
+    "@angular/forms": "4.4.4",
+    "@angular/http": "4.4.4",
+    "@angular/platform-browser": "4.4.4",
+    "@angular/platform-browser-dynamic": "4.4.4",
+    "@ionic-native/core": "4.3.2",
+    "@ionic-native/splash-screen": "4.3.2",
+    "@ionic-native/status-bar": "4.3.2",
+    "@ionic/storage": "2.0.1",
+    "ionic-angular": "3.8.0",
+>>>>>>> sj
     "ionicons": "3.0.0",
     "rxjs": "5.4.3",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.18"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@ionic/app-scripts": "3.0.0",
     "typescript": "2.3.4"
   },
@@ -50,4 +74,10 @@
       }
     }
   }
+=======
+    "@ionic/app-scripts": "3.0.1",
+    "typescript": "2.3.4"
+  },
+  "description": "An Ionic project"
+>>>>>>> sj
 }
