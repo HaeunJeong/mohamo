@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MypagePage } from '../mypage/mypage';
 import * as firebase from 'firebase';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
-import { SetSchedulePage } from '../pages/set-schedule/set-schedule';
+import { SetSchedulePage } from '../set-schedule/set-schedule';
 import { MypageSchedulePage } from '../mypage-schedule/mypage-schedule';
 
 @IonicPage()
