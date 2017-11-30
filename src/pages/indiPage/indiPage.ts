@@ -41,7 +41,7 @@ export class IndiPagePage {
     this.meetingCode = navParams.data;
     this.geo = this.geolocation;
 
-    this.navCtrl.push(RulePage, {godata: this.meetingCode});//rulepage로 데이터 이동
+    //this.navCtrl.push(RulePage, {godata: this.meetingCode});//rulepage로 데이터 이동
     let dataURL = this.af.database;
     console.log("meetingcode", this.meetingCode)
     //미팅 이름 얻기 OK

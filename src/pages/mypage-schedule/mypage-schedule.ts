@@ -53,6 +53,27 @@ export class MypageSchedulePage {
             // getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '30', value: false });
           }
         }
+        for (var date = 1; date <= 31; date++) {
+          for (var alltime = 1; alltime <= 9; alltime++) {
+            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+              .child('y_17').child('m_12').child('d_' + date.toString())
+              .child(getThis.dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '00').set(false);
+            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+              .child('y_17').child('m_12').child('d_' + date.toString())
+              .child(getThis.dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '30').set(false);
+          }
+          for (var alltime = 10; alltime <= 24; alltime++) {
+            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+              .child('y_17').child('m_12').child('d_' + date.toString())
+              .child(getThis.dayOf11[(date - 1) % 7]).child(alltime + ':' + '00').set(false);
+            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+              .child('y_17').child('m_12').child('d_' + date.toString())
+              .child(getThis.dayOf11[(date - 1) % 7]).child(alltime + ':' + '30').set(false);
+            //getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '00', value: false });
+
+            // getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '30', value: false });
+          }
+        }
       }
       else {
         console.log('생성안댐');
@@ -68,6 +89,7 @@ export class MypageSchedulePage {
     var this_week = [];
 
     var today_month = new Date().getMonth() + 1;
+    today_month = 11;
     // var today_date = new Date().getDate(); 
     // var today_day = new Date().getDay();
     var today_date = 20;
@@ -129,6 +151,7 @@ export class MypageSchedulePage {
     //오늘날짜가 포함된 1주일치의 schedule 내용을 읽어오기
 
     var today_month = new Date().getMonth() + 1;
+    today_month = 11;
     // var today_date = new Date().getDate(); 
     // var today_day = new Date().getDay();
     var today_date = 20;

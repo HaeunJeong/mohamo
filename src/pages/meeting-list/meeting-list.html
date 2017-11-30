@@ -17,13 +17,13 @@
   
   </ion-header>
 
-<ion-content padding>
+<ion-content padding (longPress)="removeMeeting(temp)" >
 
  
   <ion-list>
  
     <!--현재 on-hold 가 안먹히는 상태임 -->
-    <ion-item *ngFor="let temp of title_list" on-hold="removeMeeting(temp)" 
+    <ion-item *ngFor="let temp of title_list" 
     (click)="goMeetingPage(temp)">
       <h2>{{temp.title}}</h2>
     </ion-item>

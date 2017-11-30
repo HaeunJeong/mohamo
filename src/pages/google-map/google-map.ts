@@ -51,7 +51,7 @@ export class GoogleMapPage {
     var temp_lat, temp_lng;
     //var bounds = new google.maps.LatLngBounds();
     var map = new google.maps.Map(this.mapElement.nativeElement, {
-      center: { lat: -34.397, lng: 150.644 },
+      center: { lat: 36.106896, lng: 129.3863333},
       zoom: 15
     });
 
@@ -61,6 +61,7 @@ export class GoogleMapPage {
 
     // if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
+
       pos = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
@@ -89,6 +90,38 @@ export class GoogleMapPage {
         console.log('marker:' + marker.lat);
 
       });
+    },function(error){
+
+      console.log('error');
+
+      pos = {
+        lat: 36.106896, lng: 129.3863333
+      };
+
+      console.log(pos.lat);
+
+      map.setCenter(pos);
+
+      marker.setPosition(pos);
+      marker.setMap(map);
+      marker.setDraggable(true);
+
+      marker.addListener('dragend', function (e) {
+        marker.lat = e.latLng.lat();
+        marker.lng = e.latLng.lng();
+
+        this.map.setZoom(18);
+        //this.map.setCenter(marker.getPosition());
+        //infoWindow.setContent(marker.lat+','+marker.lng+'<br>'+'<button ion-button block onclick= "alertText()">Add</button>');
+        infoWindow.setContent(marker.lat + ',' + marker.lng);
+        infoWindow.open(this.map, marker);
+
+        getThis.cur_pos_lat = marker.lat;
+        getThis.cur_pos_lng = marker.lng;
+        console.log('marker:' + marker.lat);
+
+      });
+
     });
     console.log('cur' + this.cur_pos_lat);
   }
