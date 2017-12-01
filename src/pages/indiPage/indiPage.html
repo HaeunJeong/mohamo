@@ -14,13 +14,13 @@
   <ion-list>
     
     <ion-item *ngFor="let mtMem of mtMemList" (click)="attendanceCheck(mtMem[0])">
-
+<!--
       <ion-avatar item-start *ngIf="mtMem[0].LatLonDiff.meetingCode==meetingCode&&mtMem[0].LatLonDiff.lat<=0.03&&mtMem[0].LatLonDiff.lon<=0.03">
         <img src="../../assets/imgs/smile.png">
       </ion-avatar>
       <ion-avatar item-start *ngIf="mtMem[0].LatLonDiff.meetingCode!=meetingCode||mtMem[0].LatLonDiff.lat>0.03||mtMem[0].LatLonDiff.lon>0.03">
         <img src="../../assets/imgs/emptyCircle.png">
-      </ion-avatar>
+      </ion-avatar> -->
       {{mtMem[0].name}}
 
     </ion-item>

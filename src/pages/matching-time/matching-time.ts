@@ -343,7 +343,25 @@ export class MatchingTimePage {
       }
     
     }
+  }).then(function(res){
+    var sun_date_ = getThis.schedules_sun[0].date.split('_');
+    var mon_date_ = getThis.schedules_mon[0].date.split('_');
+    var tue_date_ = getThis.schedules_tue[0].date.split('_');
+    var wed_date_ = getThis.schedules_wed[0].date.split('_');
+    var thu_date_ = getThis.schedules_thu[0].date.split('_');
+    var fri_date_ = getThis.schedules_fri[0].date.split('_');
+    var sat_date_ = getThis.schedules_sat[0].date.split('_');
+
+    getThis.sun_date = sun_date_[1] + '일';
+    getThis.mon_date = mon_date_[1] + '일';
+    getThis.tue_date = tue_date_[1] + '일';
+    getThis.wed_date = wed_date_[1]+ '일';
+    getThis.thu_date = thu_date_[1]+ '일';
+    getThis.fri_date = fri_date_[1]+ '일';
+    getThis.sat_date = sat_date_[1]+ '일';
+
   });
+
 
     
   }
@@ -364,6 +382,19 @@ export class MatchingTimePage {
       schedule.isSelected = false;
 
     }
+
+    if (schedule.value == false) {
+      schedule.value = true;
+      firebase.database().ref('/userProfile/' + getThis.userId + '/schedule/y_17/m_11')
+        .child(schedule.date).child(schedule.day).child(schedule.time).set(true);
+    }
+    else
+    {
+      schedule.value = false;
+      firebase.database().ref('/userProfile/' + getThis.userId + '/schedule/y_17/m_11')
+        .child(schedule.date).child(schedule.day).child(schedule.time).set(false);
+    }
+
     console.log(getThis.selected_time);
   }
 
