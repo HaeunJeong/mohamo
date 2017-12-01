@@ -5,24 +5,100 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>MatchingTime</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-  <ion-list>
-  <ion-item *ngFor="let time of times">
-    {{time}}
-  </ion-item>
-</ion-list>
-
-<div padding>
-  <button ion-button color="primary" (click)="goGoogleMap()" block>Meeting Location</button>
-  <button ion-button (click)="addNewMeetingInfo()" block>Complete</button>
-</div>
-
-</ion-content>
+  
+    <ion-navbar>
+      <ion-title>MatchingTime</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+  
+    <table align="center" border="1">
+      
+          <th>
+            <br>
+            <tr *ngFor="let schedule of schedules_sun">
+              <button> {{schedule.time}}
+              </button>
+            </tr>
+          </th>
+      
+         
+          <th>일
+            <tr *ngFor="let schedule of schedules_sun">
+              <button [ngClass]="{buttonBackground: schedule.value == false,
+                 cannotMeeting:schedule.value==true, selectButton:schedule.isSelected==true}" (click)="seclectbutton(schedule)">
+                {{schedule.date}}
+              </button>
+            </tr>
+          </th>
+      
+          
+          <th>월
+            <tr *ngFor="let schedule of schedules_mon">
+              <button [ngClass]="{buttonBackground: schedule.value == false,cannotMeeting:schedule.value==true
+              ,selectButton:schedule.isSelected==true}" (click)="seclectbutton(schedule)">
+                {{schedule.date}}
+              </button>
+            </tr>
+          </th>
+      
+         
+          <th>화
+            <tr *ngFor="let schedule of schedules_tue">
+              <button [ngClass]="{buttonBackground: schedule.value == false,cannotMeeting:schedule.value==true
+              ,selectButton:schedule.isSelected==true}" (click)="seclectbutton(schedule)">
+                {{schedule.date}}
+              </button>
+            </tr>
+          </th>
+      
+          
+          <th>수
+            <tr *ngFor="let schedule of schedules_wed">
+              <button [ngClass]="{buttonBackground: schedule.value == false,cannotMeeting:schedule.value==true
+              ,selectButton:schedule.isSelected==true}" (click)="seclectbutton(schedule)">
+                {{schedule.date}}
+              </button>
+            </tr>
+          </th>
+  
+         
+          <th>목
+            <tr *ngFor="let schedule of schedules_thu">
+              <button [ngClass]="{buttonBackground: schedule.value == false,cannotMeeting:schedule.value==true
+              ,selectButton:schedule.isSelected==true}" (click)="seclectbutton(schedule)">
+                {{schedule.date}}
+              </button>
+            </tr>
+          </th>
+      
+          
+          <th>금
+            <tr *ngFor="let schedule of schedules_fri">
+              <button [ngClass]="{buttonBackground: schedule.value == false,cannotMeeting:schedule.value==true
+              ,selectButton:schedule.isSelected==true}" (click)="seclectbutton(schedule)">
+                {{schedule.date}}
+              </button>
+            </tr>
+          </th>
+      
+         
+          <th>토
+            <tr *ngFor="let schedule of schedules_sat">
+              <button [ngClass]="{buttonBackground: schedule.value == false,cannotMeeting:schedule.value==true
+              ,selectButton:schedule.isSelected==true}" (click)="seclectbutton(schedule)">
+                {{schedule.date}}
+              </button>
+            </tr>
+          </th>
+        </table>
+  
+  <div width>
+    <button ion-button color="primary" (click)="goGoogleMap()" block>Meeting Location</button>
+    <button ion-button (click)="addNewMeetingInfo()" block>Complete</button>
+  </div>
+  
+  </ion-content>

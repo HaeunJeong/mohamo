@@ -7,6 +7,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { CurrentLoc } from '../../app/interfaces/current-loc';
 import { MatchingTimePage } from '../matching-time/matching-time';
 import { RulePage } from '../rule/rule';
+import { MemberinfoPage } from '../memberinfo/memberinfo';
 
 @Component({
   selector: 'page-indiPage',
@@ -41,7 +42,7 @@ export class IndiPagePage {
     this.meetingCode = navParams.data;
     this.geo = this.geolocation;
 
-    this.navCtrl.push(RulePage, {godata: this.meetingCode});//rulepage로 데이터 이동
+    //this.navCtrl.push(RulePage, {godata: this.meetingCode});//rulepage로 데이터 이동
     let dataURL = this.af.database;
     console.log("meetingcode", this.meetingCode)
     //미팅 이름 얻기 OK
@@ -268,7 +269,11 @@ export class IndiPagePage {
   }
 
   goEditMeetingRulePage() {
-    this.navCtrl.push(RulePage, {}, { animate: false });
+    var getThis = this;
+    this.navCtrl.push(RulePage,  {godata: getThis.meetingCode}, { animate: false });
   }
-
+  GoMemInfo(mtMem){
+    console.log("a: ", mtMem[0].$key)//예ㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖ
+    this.navCtrl.push(MemberinfoPage, {gogodata: mtMem[0].$key});
+  }
 }

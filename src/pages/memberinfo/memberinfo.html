@@ -37,7 +37,7 @@
             <ion-card-header>
                 <ion-icon name="call" item-start></ion-icon>Call member
                 <ion-item *ngFor="let items4 of phone_number">
-                  {{items4.phone}}
+                  <a href="tel:{item4.phone}" class="button button-positive">{{items4.phone}}</a>
                 </ion-item>
             </ion-card-header>
             <ion-card-content>

@@ -25,7 +25,7 @@ export class MemberinfoPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     var temp;
     var p_name = [];
-    this.userId = firebase.auth().currentUser.uid;
+    this.userId = this.navParams.get('gogodata');
     firebase.database().ref('/userProfile/' + this.userId + '/name').once('value', function (snapshot) {
       temp = snapshot.val();
       p_name.push({ name: temp });
