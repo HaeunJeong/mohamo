@@ -268,7 +268,7 @@ export class IndiPagePage {
   }
 
   goEditMeetingRulePage() {
-    this.navCtrl.push(RulePage, {}, { animate: false });
+    this.navCtrl.push(RulePage, {godata: this.meetingCode}, { animate: false });
   }
 
 }
