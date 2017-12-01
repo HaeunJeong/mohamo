@@ -104,7 +104,8 @@ export class MeetingListPage {
   }
 
   removeMeeting(temp){
-
+    console.log('remove');
+;
     let alert = this.alertCtrl
     let wantRemove = alert.create({
       title: '모임방 삭제',
