@@ -130,9 +130,11 @@ export class MeetingListPage {
   }
 
   ionViewDidLoad() {
+
+     //처음 미팅리스트페이지에 들어오면 스케쥴 부분 디비 자동생성
     var dayOf11 = ['Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue'];
     var dayOf12 = ['Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu'];
-    //처음 미팅리스트페이지에 들어오면 스케쥴 부분 디비 자동생성
+   
     
     var getThis = this;
     getThis.userId = firebase.auth().currentUser.uid;
