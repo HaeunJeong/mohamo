@@ -21,6 +21,7 @@ export class MatchingTimePage {
   m_lng;
   m_place;
   selected_time =[];
+  month = new Date().getMonth() + 1;
   
   haveSchedule = [];
   dayOf11 = ['Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue'];
@@ -53,19 +54,12 @@ export class MatchingTimePage {
    
 
     var today_month = new Date().getMonth() + 1;
-    today_month = 11;
-    // var today_date = new Date().getDate(); 
-    // var today_day = new Date().getDay();
-    var today_date = 20;
-    var today_day = 1;
+    //today_month = 11;
+    var today_date = new Date().getDate(); 
+    var today_day = new Date().getDay();
     var last_date = this.getMonthOfLastDate(today_month);
     //console.log("last_date: "+last_date);
 
-    //1주일치를 가져오기 위해서 
-    var backward = today_day; //0:일, 1:월, 2:화
-    //console.log("today_day: " + today_day);
-
-    //각 월마다 요일순서가 다르니까
     var dayOrderByMonth;
     if (today_month == 11)
       dayOrderByMonth = getThis.dayOf11;
@@ -107,13 +101,15 @@ export class MatchingTimePage {
     var getThis = this;
 
     var today_month = new Date().getMonth() + 1;
-    today_month = 11;
-    // var today_date = new Date().getDate(); 
-    // var today_day = new Date().getDay();
-    var today_date = 20;
-    var today_day = 1;
+    //today_month = 11;
+    var today_date = new Date().getDate(); 
+    var today_day = new Date().getDay();
+    //var today_date = 20;
+    //var today_day = 1;
 
+    
     var backward = today_day; //0:일, 1:월, 2:화
+
 
     var temp:String;
     var member_list=[]; //모임에 속한 member들의 key
@@ -144,7 +140,7 @@ export class MatchingTimePage {
 
         // 한 일자별로 돌면서, 그 안에 스케쥴이 있으면 그걸 haveSchedule 어레이에 넣는다. 
         // 일주일치를 다 돌면, 그 다음에는 다음 멤버로 돌아가서 다시 반복
-      for (var date = today_date - backward; date < 6 + today_date; date++) { //오늘날짜에서 뒤로 며칠이 있는지 계산하여, 그 요일이 포함된 1주일을 가져오도록 함
+      for (var date = today_date - backward; date < 7 + today_date-backward; date++) { //오늘날짜에서 뒤로 며칠이 있는지 계산하여, 그 요일이 포함된 1주일을 가져오도록 함
         // console.log('반복문 ' + date);
         getThis.getThisWeek(date, member_id);
       }
@@ -153,7 +149,7 @@ export class MatchingTimePage {
     })
   }).then(function(res){
 
-    for (var date = today_date - backward; date < 6 + today_date; date++){
+    for (var date = today_date - backward; date < 7 + today_date-backward; date++){
 
       //console.log(getThis.haveSchedule[1]);
       if(dayOrderByMonth[(date - 1) % 7]=='Sun'){
@@ -370,29 +366,21 @@ export class MatchingTimePage {
   seclectbutton(schedule) {
 
     var getThis = this;
-    var res = schedule.date.split('_');
+    var res = schedule.date.split('_'); //일자만 딱 빼내기
 
-    if(getThis.selected_time.findIndex(i => i.date === res[1] && i.time === schedule.time)==-1){
-      getThis.selected_time.push({date:res[1], time: schedule.time});
+    //선택된 시간이, selected_time 에 없는 시간이면, 그 시간을 selected_time에 넣고, 선택되었다는 표시!
+    if(getThis.selected_time.findIndex(i => i.date === res[1] && i.time === schedule.time)==-1 && schedule.value == false){
+      getThis.selected_time.push({date:res[1], day: schedule.day, time: schedule.time});
       schedule.isSelected = true;
+
+
     }
-      
+    
+    //기존 selected_time 리스트에 있는 시간이 다시 선택된 경우에는, 리스트에서도 빼고, 선택표시도 해제한다.
     else{
       getThis.selected_time.splice(getThis.selected_time.findIndex(i => i.date === res[1] && i.time === schedule.time),1);
       schedule.isSelected = false;
 
-    }
-
-    if (schedule.value == false) {
-      schedule.value = true;
-      firebase.database().ref('/userProfile/' + getThis.userId + '/schedule/y_17/m_11')
-        .child(schedule.date).child(schedule.day).child(schedule.time).set(true);
-    }
-    else
-    {
-      schedule.value = false;
-      firebase.database().ref('/userProfile/' + getThis.userId + '/schedule/y_17/m_11')
-        .child(schedule.date).child(schedule.day).child(schedule.time).set(false);
     }
 
     console.log(getThis.selected_time);
@@ -426,14 +414,43 @@ export class MatchingTimePage {
   addNewMeetingInfo(){
 
     var getThis = this;
-    var time_table = [];
-    console.log('설마'+this.m_lat);
+    var temp;
+    var member_list = [];
 
-    getThis.selected_time.sort(function(a,b){
+    var time_table = [];
+    
+    getThis.selected_time.sort(function (a, b) {
       return a.time - b.time;
     });
 
+    var date = getThis.selected_time[0].date;
+    var day = getThis.selected_time[0].day;
+    var time = [];
+    for(var i=0;i<getThis.selected_time.length;i++)
+       time.push(getThis.selected_time[i].time);
+
+    //모임에 참여되어있는 멤버들 모두의 스케쥴에 변화를 줘야함.
+    console.log(time);
+    firebase.database().ref('/allMeeting/'+getThis.meeting_code+'/member').once('value').then(function (snapshot) {
+      console.log('/allMeeting/'+getThis.meeting_code+'/member');
+      snapshot.forEach(function (childSnapshot) {
+        temp = childSnapshot.key;
+        member_list.push(temp);
+      })
+      return member_list;
+    }).then(function (res) {
+      res.forEach(function (member) {
+        for(var i =0; i<getThis.selected_time.length; i++){
+          console.log('/userProfile/' + member + '/schedule/y_17/m_' + getThis.month+'/d_'+date+'/'+day+'/'+time[i]);
+          firebase.database().ref('/userProfile/' + member + '/schedule/y_17/m_' + getThis.month)
+          .child('d_' + date).child(day)
+          .child(time[i]).set(true);
+        }
+
+      });
+    });
  
+
     for(var alltime = 1;alltime<=9;alltime++){
 
       time_table.push('0'+alltime+':'+'00');
