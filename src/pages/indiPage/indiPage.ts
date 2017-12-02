@@ -69,6 +69,7 @@ export class IndiPagePage {
     this.afMtMembers = af.list('/allMeeting/' + this.meetingCode + '/member');
 
 
+
     this.afMtMembers.subscribe(
       membersArray => {
         this.mtMemNames = membersArray;
@@ -90,12 +91,43 @@ export class IndiPagePage {
     );
 
 
-    
+
     //해당 모임 약속 시간 정보 가져오기 OK
     this.meetingInfo = af.list('/allMeeting/' + this.meetingCode + '/infoToMeet');
+    this.meetingInfo.subscribe(
+      meetArray => {
+        var today = new Date();
+
+        meetArray.forEach(meetInfo => {
+          console.log(meetInfo.$key);
+
+          var meetDateTemp1 = meetInfo.dateTime.split("월 ");
+          var meetDateTemp2 = meetDateTemp1[1].split("일 ")
+
+          //각 미팅별 month, day 체크=> 현재보다 지난 meeting일시 done 넣어주면서 화면에서 안 보이도록 만든다.
+          var meetInfoMonth = meetDateTemp1[0];
+          var meetInfoDay = meetDateTemp2[0];
+
+          var todayMonth = today.getMonth() + 1;
+          var todayDay = today.getDate();
+
+          if ((todayMonth > meetInfoMonth) || (todayMonth == meetInfoMonth && todayDay > meetInfoDay)) {
+            this.af.database.ref('/allMeeting/' + this.meetingCode + '/infoToMeet/' + meetInfo.$key + '/done').once('value', (snapshot) => {
+              if (!snapshot.exists())
+                this.af.database.ref('/allMeeting/' + this.meetingCode + '/infoToMeet/' + meetInfo.$key).push({ done: "y" });
+            });
+          }
+
+          
+        });
+      }
+      
+    );
+
+
   }
 
- 
+
   //출석 위해 자기 이름 클릭시 발생하는 이벤트
   //미팅은 하루에 한번만 있는 걸로 가정. 
   attendanceCheck(member: any) {
@@ -268,7 +300,7 @@ export class IndiPagePage {
   }
 
   goEditMeetingRulePage() {
-    this.navCtrl.push(RulePage, {godata: this.meetingCode}, { animate: false });
+    this.navCtrl.push(RulePage, { godata: this.meetingCode }, { animate: false });
   }
 
 }
