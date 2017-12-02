@@ -7,6 +7,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { CurrentLoc } from '../../app/interfaces/current-loc';
 import { MatchingTimePage } from '../matching-time/matching-time';
 import { RulePage } from '../rule/rule';
+import { ShowHistoryPage } from '../show-history/show-history';
 
 @Component({
   selector: 'page-indiPage',
@@ -269,6 +270,10 @@ export class IndiPagePage {
 
   goEditMeetingRulePage() {
     this.navCtrl.push(RulePage, {godata: this.meetingCode}, { animate: false });
+  }
+
+  goHistoryPage() {
+    this.navCtrl.push(ShowHistoryPage, this.meetingCode);
   }
 
 }

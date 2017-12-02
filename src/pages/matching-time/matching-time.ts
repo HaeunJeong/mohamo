@@ -456,7 +456,7 @@ export class MatchingTimePage {
     firebase.database().ref('/allMeeting/'+this.meeting_code+'/infoToMeet/'+new_time).child('LatLon').child('lon').set(this.m_lng);
     firebase.database().ref('/allMeeting/'+this.meeting_code+'/infoToMeet/'+new_time).child('dateTime').set(selected_meeting_time);
     firebase.database().ref('/allMeeting/'+this.meeting_code+'/infoToMeet/'+new_time).child('place').set(this.m_place);
-
+    firebase.database().ref('/allMeeting/'+this.meeting_code+'/infoToMeet/'+new_time).child('done').set('n');
     this.navCtrl.pop();
   }
 
