@@ -8,6 +8,9 @@ import { CurrentLoc } from '../../app/interfaces/current-loc';
 import { MatchingTimePage } from '../matching-time/matching-time';
 import { RulePage } from '../rule/rule';
 
+import { MemberinfoPage } from '../memberinfo/memberinfo';
+
+
 @Component({
   selector: 'page-indiPage',
   templateUrl: 'indiPage.html'
@@ -263,12 +266,16 @@ export class IndiPagePage {
     });*/
   }
 
-  goEditMeetingInfoPage() {
-    this.navCtrl.push(MatchingTimePage, this.meetingCode);
+  goMemberInfoPage() {
+    this.navCtrl.push(MemberinfoPage, this.userId);
   }
 
   goEditMeetingRulePage() {
     this.navCtrl.push(RulePage, {godata: this.meetingCode}, { animate: false });
+  }
+
+  goEditMeetingInfoPage() {
+    this.navCtrl.push(MatchingTimePage, this.meetingCode);
   }
 
 }

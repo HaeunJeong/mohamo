@@ -21,11 +21,12 @@ export class MemberinfoPage {
   person_name = [];
   phone_number = [];
   mail_name = [];
+  exampledata;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     var temp;
     var p_name = [];
-    this.userId = firebase.auth().currentUser.uid;
+    this.userId = this.navParams.get('gogodata');
     firebase.database().ref('/userProfile/' + this.userId + '/name').once('value', function (snapshot) {
       temp = snapshot.val();
       p_name.push({ name: temp });
@@ -43,14 +44,20 @@ export class MemberinfoPage {
     this.mail_name = m_name;
 
 
-    var temp2;
-    var p_number = []
 
-    firebase.database().ref('/userProfile/' + this.userId + '/phone').once('value', function (snapshot) {
-      temp2 = snapshot.val();
+    var p_number = [];
+    var p_number2;
+
+    firebase.database().ref('/userProfile/' + this.userId + '/phone_number').once('value', function (snapshot) {
+      var temp2 = snapshot.val();
+      var temp3 = snapshot.val();
       p_number.push({ phone: temp2 });
+      p_number2.push({ phone2: temp3 });
+      console.log('phone2: ', temp3);
     })
     this.phone_number = p_number;
+    this.exampledata = p_number2;
+    console.log(this.exampledata);
   }
 
   ionViewDidLoad() {

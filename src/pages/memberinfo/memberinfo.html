@@ -19,7 +19,8 @@
           <ion-card-header>
               <ion-icon name="paw" item-start></ion-icon> Member
               <ion-item *ngFor="let items3 of person_name">
-                {{items3.name}}
+               <!-- {{items3.name}}-->
+                <a href="tel:" class="button button-positive">{{items3.name}}</a>
               </ion-item>
               <ion-item *ngFor="let mail of mail_name">
                 {{mail.mail}}
@@ -29,15 +30,13 @@
              
           </ion-card-content>
         </ion-card>
-  
-        <img src = "http://placehold.it/300x100" class = "logo"/> <!-- 시간표 작성 하는 페이지로 -->
         
   
         <ion-card>
             <ion-card-header>
                 <ion-icon name="call" item-start></ion-icon>Call member
                 <ion-item *ngFor="let items4 of phone_number">
-                  {{items4.phone}}
+                  <a href="tel:{{exampledata.phone2}}" class="button button-positive">{{items4.phone}}</a>
                 </ion-item>
             </ion-card-header>
             <ion-card-content>
