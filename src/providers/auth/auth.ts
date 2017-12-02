@@ -6,7 +6,6 @@ import 'rxjs/add/operator/map';
 
 /*
   Generated class for the AuthProvider provider.
-
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
@@ -30,14 +29,16 @@ export class AuthProvider {
       });
   }
 
-  signupUser(email: string, password: string, name:string): firebase.Promise<any> {
+  signupUser(email: string, password: string, name:string,phone_number:string): firebase.Promise<any> {
     return firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(newUser => {
         firebase.database().ref(`/userProfile/${newUser.uid}/email`)
           .set(email);
         console.log('name: '+name);
         firebase.database().ref(`/userProfile/${newUser.uid}/name`)
-          .set(name)
+          .set(name);
+        firebase.database().ref(`/userProfile/${newUser.uid}/phone_number`)
+          .set(phone_number);
       }).catch(error => console.error(error));
   }
 

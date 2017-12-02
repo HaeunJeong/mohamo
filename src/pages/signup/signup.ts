@@ -36,7 +36,8 @@ export class SignupPage {
       EmailValidator.isValid])],
       password: ['', Validators.compose([Validators.minLength(6),
       Validators.required])],
-      name:['']
+      name:[''],
+      phone_number:['']
     });
   }
 
@@ -50,8 +51,9 @@ export class SignupPage {
       const email: string = this.signupForm.value.email; //this.signupForm.value.email 가 html에서 받아와진거야.
       const password: string = this.signupForm.value.password;
       const name:string = this.signupForm.value.name;
+      const phone_number:string = this.signupForm.value.phone_number;
       //console.log("name이"+name);
-      this.authProvider.signupUser(email, password,name).then(user => {//여기서의 signupUser는 auth.ts에 있는거다.
+      this.authProvider.signupUser(email, password,name,phone_number).then(user => {//여기서의 signupUser는 auth.ts에 있는거다.
         
         this.loading.dismiss().then(() => {
           this.navCtrl.setRoot(MeetingListPage);

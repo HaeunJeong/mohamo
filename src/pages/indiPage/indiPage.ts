@@ -31,6 +31,7 @@ export class IndiPagePage {
   meetingCode: string;
   meetingTitle: string = null;
   geo;
+  score = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -41,6 +42,10 @@ export class IndiPagePage {
     this.userId = firebase.auth().currentUser.uid;
     this.meetingCode = navParams.data;
     this.geo = this.geolocation;
+
+    firebase.database().ref('/allMeeting/'+ this.meetingCode + '/member/' + this.userId + '/personal_penalty').push(this.score);
+    console.log("개인벌점점수: ",this.score )
+
 
     //this.navCtrl.push(RulePage, {godata: this.meetingCode});//rulepage로 데이터 이동
     let dataURL = this.af.database;
