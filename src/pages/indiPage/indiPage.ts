@@ -7,7 +7,11 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { CurrentLoc } from '../../app/interfaces/current-loc';
 import { MatchingTimePage } from '../matching-time/matching-time';
 import { RulePage } from '../rule/rule';
+<<<<<<< HEAD
 import { ShowHistoryPage } from '../show-history/show-history';
+=======
+import { MemberinfoPage } from '../memberinfo/memberinfo';
+>>>>>>> master
 
 @Component({
   selector: 'page-indiPage',
@@ -332,4 +336,9 @@ export class IndiPagePage {
     }
   }
 
+  GoMemInfo(mtMem){
+    console.log("a: ", mtMem[0].$key)//예ㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖ
+    this.navCtrl.push(MemberinfoPage, {gogodata: mtMem[0].$key});
+  }
+  
 }

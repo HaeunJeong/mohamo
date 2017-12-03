@@ -22,6 +22,8 @@ export class SetSchedulePage {
   userId;
   selectedSchedule = [];
 
+  month = new Date().getMonth() +1;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loadingCtrl: LoadingController) {
       this.userId = firebase.auth().currentUser.uid;
@@ -44,13 +46,13 @@ export class SetSchedulePage {
     var getThis = this;
     if (schedule.value == false) {
       schedule.value = true;
-      firebase.database().ref('/userProfile/' + getThis.userId + '/schedule/y_17/m_11')
+      firebase.database().ref('/userProfile/' + getThis.userId + '/schedule/y_17/m_'+getThis.month)
         .child(schedule.date).child(schedule.day).child(schedule.time).set(true);
     }
     else //if (schedule.value == true)
     {
       schedule.value = false;
-      firebase.database().ref('/userProfile/' + getThis.userId + '/schedule/y_17/m_11')
+      firebase.database().ref('/userProfile/' + getThis.userId + '/schedule/y_17/m_'+getThis.month)
         .child(schedule.date).child(schedule.day).child(schedule.time).set(false);
     }
 
@@ -63,7 +65,7 @@ export class SetSchedulePage {
     var getThis = this;
     let loader = getThis.loadingCtrl.create({
       content: "저장중...",
-      duration: 5000
+      duration: 2000
     });
     console.log("함수 들어옴 " + getThis.selectedSchedule);
      
@@ -71,7 +73,7 @@ export class SetSchedulePage {
 
     setTimeout(function () {
       getThis.navCtrl.push(MypageSchedulePage);
-    }, 5000);
+    }, 2000);
 
 
 

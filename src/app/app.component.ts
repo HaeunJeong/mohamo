@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { MeetingListPage } from '../pages/meeting-list/meeting-list';
 import { MatchingTimePage } from '../pages/matching-time/matching-time';
 import { RulePage } from '../pages/rule/rule';
+import { MemberinfoPage } from '../pages/memberinfo/memberinfo';
 import * as firebase from 'firebase';
 
 @Component({
