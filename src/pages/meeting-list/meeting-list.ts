@@ -100,35 +100,42 @@ export class MeetingListPage {
 
   }
 
-  removeMeeting(temp){
-    console.log('remove');
-;
-    let alert = this.alertCtrl
-    let wantRemove = alert.create({
-      title: '모임방 삭제',
-      message: "해당 모임방에서 나가시겠습니까?",
-      buttons: [
-        {
-          text:'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        { text: "Ok", 
-          handler: data => {
-            console.log("remove:", temp.title);
-            firebase.database().ref('/allMeeting/'+temp.code+'/member').child(this.userId).remove();
-            firebase.database().ref('/userProfile/'+this.userId+'/m_list').child(temp.code).remove();
-            this.ionViewDidEnter();
-        }
-      }
+  // removeMeeting(temp){
+  //   console.log('remove');
+  //   let alert = this.alertCtrl
+  //   let wantRemove = alert.create({
+  //     title: '모임방 삭제',
+  //     message: "해당 모임방에서 나가시겠습니까?",
+  //     buttons: [
+  //       {
+  //         text:'Cancel',
+  //         handler: data => {
+  //           console.log('Cancel clicked');
+  //         }
+  //       },
+  //       { text: "Ok", 
+  //         handler: data => {
+  //           firebase.database().ref('/allMeeting/'+temp+'/member').child(this.userId).remove();
+  //           firebase.database().ref('/userProfile/'+this.userId+'/m_list').child(temp).remove();
+
+  //           // //삭제하려는 사람이 모임방의 leader일경우, 리더에서도 삭제
+  //           // firebase.database().ref('/allMeeting/'+temp+'/leader').once('value',function(snapshot){
+  //           //   console.log(snapshot.val());
+  //           //   if(snapshot.val()==this.userId)
+  //           //   firebase.database().ref('/allMeeting/'+temp+'/leader').child('userId').remove();
+
+  //           // });
+
+  //           this.ionViewDidEnter();
+  //       }
+  //     }
       
-      ]
-    });
+  //     ]
+  //   });
 
 
-    wantRemove.present();
-  }
+  //   wantRemove.present();
+  // }
 
   ionViewDidLoad() {
 

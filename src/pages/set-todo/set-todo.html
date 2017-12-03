@@ -11,7 +11,7 @@
     <table align="center" id="tableID" border="1">
       
             <th>
-                <br>
+                <br><br>
                 <tr *ngFor="let schedule of schedules_sun">
                    <button>{{schedule.time}}
                   </button>
@@ -19,69 +19,73 @@
               </th>
       
           <th>일
+              <br> {{sun_date}}
             <tr *ngFor="let schedule of schedules_sun">
-               <button [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
-                {{schedule.date}}
-                <br>{{schedule.value}}
+               <button [ngClass]="{buttonBackground: schedule.value != false, noSchedule:schedule.value == false}" (click)="seclectbutton(schedule)">
+                {{schedule.value}}
       
               </button>
             </tr>
           </th>
       
           <th>월
+              <br> {{mon_date}}
             <tr *ngFor="let schedule of schedules_mon">
-               <button [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
-                {{schedule.date}}
-                <br>{{schedule.value}}
+               <button [ngClass]="{buttonBackground: schedule.value != false, noSchedule:schedule.value == false}" (click)="seclectbutton(schedule)">
+                {{schedule.value}}
               </button>
             </tr>
           </th>
       
           <th>화
+              <br> {{tue_date}}
             <tr *ngFor="let schedule of schedules_tue">
-               <button [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
-                {{schedule.date}}
-                <br>{{schedule.value}}
+               <button [ngClass]="{buttonBackground: schedule.value != false, noSchedule:schedule.value == false}" (click)="seclectbutton(schedule)">
+                {{schedule.value}}
               </button>
             </tr>
           </th>
       
           <th>수
+              <br> {{wed_date}}
             <tr *ngFor="let schedule of schedules_wed">
-               <button [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
-                {{schedule.date}}
-                <br>{{schedule.value}}
+               <button [ngClass]="{buttonBackground: schedule.value != false, noSchedule:schedule.value == false}" (click)="seclectbutton(schedule)">
+
+                {{schedule.value}}
               </button>
             </tr>
           </th>
       
           <th>목
+              <br> {{thu_date}}
             <tr *ngFor="let schedule of schedules_thu">
-               <button [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
-                {{schedule.date}}
-                <br>{{schedule.value}}
+               <button [ngClass]="{buttonBackground: schedule.value != false, noSchedule:schedule.value == false}" (click)="seclectbutton(schedule)">
+ 
+                {{schedule.value}}
               </button>
             </tr>
           </th>
       
           <th>금
+              <br> {{fri_date}}
             <tr *ngFor="let schedule of schedules_fri">
-               <button [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
-                {{schedule.date}}
-                <br>{{schedule.value}}
+               <button [ngClass]="{buttonBackground: schedule.value != false, noSchedule:schedule.value == false}" (click)="seclectbutton(schedule)">
+    
+                {{schedule.value}}
               </button>
             </tr>
           </th>
       
           <th>토
+              <br> {{sat_date}}
             <tr *ngFor="let schedule of schedules_sat">
-               <button [ngClass]="{buttonBackground: schedule.value != false}" (click)="seclectbutton(schedule)">
-                {{schedule.date}}
-                <br>{{schedule.value}}
+               <button [ngClass]="{buttonBackground: schedule.value != false, noSchedule:schedule.value == false}" (click)="seclectbutton(schedule)">
+       
+                {{schedule.value}}
               </button>
             </tr>
           </th>
         </table>
       
-        <button ion-button (click)="addSchedule()"> 수정완료 </button>
+        <button ion-button (click)="addSchedule()" block> 수정완료 </button>
   </ion-content>

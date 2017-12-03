@@ -22,18 +22,43 @@ export class SetSchedulePage {
   userId;
   selectedSchedule = [];
 
+  sun_date;
+  mon_date;
+  tue_date;
+  wed_date;
+  thu_date;
+  fri_date;
+  sat_date;
+
   month = new Date().getMonth() +1;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loadingCtrl: LoadingController) {
+      var getThis = this;
       this.userId = firebase.auth().currentUser.uid;
-    this.schedules_sun = this.navParams.get('sun');
-    this.schedules_mon = this.navParams.get('mon');
-    this.schedules_tue = this.navParams.get('tue');
-    this.schedules_wed = this.navParams.get('wed');
-    this.schedules_thu = this.navParams.get('thu');
-    this.schedules_fri = this.navParams.get('fri');
-    this.schedules_sat = this.navParams.get('sat');
+    this.schedules_sun = this.navParams.get('sun').ionViewDidLoad() ;
+    this.schedules_mon = this.navParams.get('mon').ionViewDidLoad();
+    this.schedules_tue = this.navParams.get('tue').ionViewDidLoad();
+    this.schedules_wed = this.navParams.get('wed').ionViewDidLoad();
+    this.schedules_thu = this.navParams.get('thu').ionViewDidLoad();
+    this.schedules_fri = this.navParams.get('fri').ionViewDidLoad();
+    this.schedules_sat = this.navParams.get('sat').ionViewDidLoad();
+
+    var sun_date_ = getThis.schedules_sun[0].date.split('_');
+    var mon_date_ = getThis.schedules_mon[0].date.split('_');
+    var tue_date_ = getThis.schedules_tue[0].date.split('_');
+    var wed_date_ = getThis.schedules_wed[0].date.split('_');
+    var thu_date_ = getThis.schedules_thu[0].date.split('_');
+    var fri_date_ = getThis.schedules_fri[0].date.split('_');
+    var sat_date_ = getThis.schedules_sat[0].date.split('_');
+
+    getThis.sun_date = sun_date_[1] + '일';
+    getThis.mon_date = mon_date_[1] + '일';
+    getThis.tue_date = tue_date_[1] + '일';
+    getThis.wed_date = wed_date_[1]+ '일';
+    getThis.thu_date = thu_date_[1]+ '일';
+    getThis.fri_date = fri_date_[1]+ '일';
+    getThis.sat_date = sat_date_[1]+ '일';
   }
 
   ionViewDidLoad() {
@@ -63,19 +88,7 @@ export class SetSchedulePage {
 
   addSchedule() {
     var getThis = this;
-    let loader = getThis.loadingCtrl.create({
-      content: "저장중...",
-      duration: 2000
-    });
-    console.log("함수 들어옴 " + getThis.selectedSchedule);
-     
-    loader.present();
-
-    setTimeout(function () {
-      getThis.navCtrl.push(MypageSchedulePage);
-    }, 2000);
-
-
+    getThis.navCtrl.pop();
 
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import * as firebase from 'firebase';
 import { SetSchedulePage } from '../set-schedule/set-schedule';
 import { SetTodoPage } from '../set-todo/set-todo';
@@ -22,65 +22,21 @@ export class MypageSchedulePage {
   schedules_thu = [];
   schedules_fri = [];
   schedules_sat = [];
+
+  sun_date;
+  mon_date;
+  tue_date;
+  wed_date;
+  thu_date;
+  fri_date;
+  sat_date;
+
   //date = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams
+    , public events: Events) {
     this.userId = firebase.auth().currentUser.uid;
     var getThis = this;
-    // firebase.database().ref('/userProfile/' + this.userId + '/schedule').once('value', function (snapshot) {
-
-    //   if (snapshot.val() == null) {
-    //     console.log('생성댐'); //회원가입할때 넣기!
-
-    //     for (var date = 1; date <= 30; date++) {
-    //       for (var alltime = 1; alltime <= 9; alltime++) {
-    //         firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-    //           .child('y_17').child('m_11').child('d_' + date.toString())
-    //           .child(getThis.dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '00').set(false);
-    //         firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-    //           .child('y_17').child('m_11').child('d_' + date.toString())
-    //           .child(getThis.dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '30').set(false);
-    //       }
-    //       for (var alltime = 10; alltime <= 24; alltime++) {
-    //         firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-    //           .child('y_17').child('m_11').child('d_' + date.toString())
-    //           .child(getThis.dayOf11[(date - 1) % 7]).child(alltime + ':' + '00').set(false);
-    //         firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-    //           .child('y_17').child('m_11').child('d_' + date.toString())
-    //           .child(getThis.dayOf11[(date - 1) % 7]).child(alltime + ':' + '30').set(false);
-    //         //getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '00', value: false });
-
-    //         // getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '30', value: false });
-    //       }
-    //     }
-    //     for (var date = 1; date <= 31; date++) {
-    //       for (var alltime = 1; alltime <= 9; alltime++) {
-    //         firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-    //           .child('y_17').child('m_12').child('d_' + date.toString())
-    //           .child(getThis.dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '00').set(false);
-    //         firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-    //           .child('y_17').child('m_12').child('d_' + date.toString())
-    //           .child(getThis.dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '30').set(false);
-    //       }
-    //       for (var alltime = 10; alltime <= 24; alltime++) {
-    //         firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-    //           .child('y_17').child('m_12').child('d_' + date.toString())
-    //           .child(getThis.dayOf11[(date - 1) % 7]).child(alltime + ':' + '00').set(false);
-    //         firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-    //           .child('y_17').child('m_12').child('d_' + date.toString())
-    //           .child(getThis.dayOf11[(date - 1) % 7]).child(alltime + ':' + '30').set(false);
-    //         //getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '00', value: false });
-
-    //         // getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '30', value: false });
-    //       }
-    //     }
-    //   }
-    //   else {
-    //     console.log('생성안댐');
-    //     // firebase.database().ref('/userProfile/' + getThis.userId + '/schedule/y_17/m_11/d_22/Wed').child('12:' + '00').set("할일있다");
-    //     //firebase.database().ref('/userProfile/' + getThis.userId + '/schedule/y_17/m_11/d_20/Mon').child('15:' + '30').set("할일있다");
-    //   }
-    // });
   }
 
   getThisWeek(date) { //오늘날짜가 포함된 1주일치의 schedule 내용을 읽어오기
@@ -130,22 +86,54 @@ export class MypageSchedulePage {
         //console.log("this_week: " + this_week[0].day);
         if (this_week.length == 0)
           console.log("this week 0"); //회원가입할때 미리 scheduleDB도 넣어놓기
-        else if (this_week[0].day == "Sun")
+        else if (this_week[0].day == "Sun"){
+          
           getThis.schedules_sun = this_week;
-        else if (this_week[0].day == "Mon")
+          var sun_date_ = getThis.schedules_sun[0].date.split('_');
+          getThis.sun_date = sun_date_[1] + '일';
+        }
+          
+        else if (this_week[0].day == "Mon"){
           getThis.schedules_mon = this_week;
-        else if (this_week[0].day == "Tue")
+          var mon_date_ = getThis.schedules_mon[0].date.split('_');
+          getThis.mon_date = mon_date_[1] + '일';
+        }
+         
+        else if (this_week[0].day == "Tue"){
           getThis.schedules_tue = this_week;
-        else if (this_week[0].day == "Wed")
+          var tue_date_ = getThis.schedules_tue[0].date.split('_');
+          getThis.tue_date = tue_date_[1] + '일';
+        }
+          
+        else if (this_week[0].day == "Wed"){
           getThis.schedules_wed = this_week;
-        else if (this_week[0].day == "Thu")
+          var wed_date_ = getThis.schedules_wed[0].date.split('_');
+          getThis.wed_date = wed_date_[1]+ '일';
+
+        }
+          
+        else if (this_week[0].day == "Thu"){
           getThis.schedules_thu = this_week;
-        else if (this_week[0].day == "Fri")
+          var thu_date_ = getThis.schedules_thu[0].date.split('_');
+          getThis.thu_date = thu_date_[1]+ '일';
+
+        }
+       
+        else if (this_week[0].day == "Fri"){
           getThis.schedules_fri = this_week;
-        else if (this_week[0].day == "Sat")
+        var fri_date_ = getThis.schedules_fri[0].date.split('_');
+        getThis.fri_date = fri_date_[1]+ '일';
+
+        }
+        
+        else if (this_week[0].day == "Sat"){
           getThis.schedules_sat = this_week;
+          var sat_date_ = getThis.schedules_sat[0].date.split('_');
+    getThis.sat_date = sat_date_[1]+ '일';
+        }
+       
        // getThis.date.push({date: this_week[0].date, day:this_week[0].day});
-      })
+      });
   }
 
   ionViewDidLoad() {
@@ -169,6 +157,9 @@ export class MypageSchedulePage {
       // console.log('반복문 ' + date);
       this.getThisWeek(date);
     }
+
+    console.log('끝');
+
   }
 
   getMonthOfLastDate(month) {
@@ -195,7 +186,8 @@ export class MypageSchedulePage {
       wed: this.schedules_wed,
       thu: this.schedules_thu,
       fri: this.schedules_fri,
-      sat: this.schedules_sat
+      sat: this.schedules_sat,
+      SetSchedulePage:this
     });
   }
 
@@ -208,8 +200,15 @@ export class MypageSchedulePage {
       wed: this.schedules_wed,
       thu: this.schedules_thu,
       fri: this.schedules_fri,
-      sat: this.schedules_sat
+      sat: this.schedules_sat,
+      SetTodoPage:this
     });
+
+    // this.events.subscribe('reload',() => {
+    //   this.navCtrl.pop();
+    //   this.navCtrl.push(SetTodoPage);
+    //   this.navCtrl.pop();
+    //  });
   }
 
 
