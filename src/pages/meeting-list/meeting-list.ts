@@ -64,6 +64,7 @@ export class MeetingListPage {
 
       firebase.database().ref('/allMeeting/'+newMeetingKey).child('member').child(this.userId).set(true);
       firebase.database().ref('/allMeeting/'+newMeetingKey).child('title').set(meeting_title);
+      firebase.database().ref('/allMeeting/'+newMeetingKey).child('leader').set({userId:this.userId});
 
       this.ionViewDidEnter();
       

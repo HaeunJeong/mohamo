@@ -45,12 +45,11 @@ export class IndiPagePage {
     this.meetingCode = navParams.data;
     this.geo = this.geolocation;
 
-    //his.leader = "temp";
     this.af.database.ref('/allMeeting/' + this.meetingCode + '/leader').once('value', (snapshot) => {
       //리더 id 얻기
+      
       snapshot.forEach(snap => {
         console.log(snap.val());
-
         this.af.database.ref('/userProfile/' + snap.val()).once('value', (snapshot) => {
           snapshot.forEach(snap2 => {
             if (snap2.key == 'name') {
@@ -64,7 +63,6 @@ export class IndiPagePage {
       })
     });
 
-    //this.navCtrl.push(RulePage, {godata: this.meetingCode});//rulepage로 데이터 이동
     let dataURL = this.af.database;
 
     //미팅 이름 얻기 OK
@@ -289,8 +287,10 @@ export class IndiPagePage {
     var amILeader = "n";
     leaderCheck.once('value', (snapshot) => {
       snapshot.forEach(snap => {
-        amILeader = "y";
-        return false;
+        if (snap.val() == this.userId) {
+          amILeader = "y";
+          return false;
+        }
       })
     }).then(result => {
       if (amILeader == "y") {
@@ -304,6 +304,9 @@ export class IndiPagePage {
           });
         });
         alert(toBeDeleted + "(이)가 삭제 되었습니다.");
+      }
+      else {
+        alert("방장만 멤버 삭제가 가능합니다.");
       }
     })
   }
