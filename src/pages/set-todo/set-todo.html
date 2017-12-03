@@ -60,7 +60,6 @@
               <br> {{thu_date}}
             <tr *ngFor="let schedule of schedules_thu">
                <button [ngClass]="{buttonBackground: schedule.value != false, noSchedule:schedule.value == false}" (click)="seclectbutton(schedule)">
- 
                 {{schedule.value}}
               </button>
             </tr>

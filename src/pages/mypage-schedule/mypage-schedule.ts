@@ -138,17 +138,12 @@ export class MypageSchedulePage {
 
   ionViewDidLoad() {
     var getThis = this;
-    //오늘날짜가 포함된 1주일치의 schedule 내용을 읽어오기
 
     var today_month = new Date().getMonth() + 1;
     //today_month = 11;
     var today_date = new Date().getDate(); 
     var today_day = new Date().getDay();
-    //var today_date = 20;
-    //var today_day = 1;
-    //console.log("last_date: "+last_date);
 
-    //1주일치를 가져오기 위해서 
     var backward = today_day; //0:일, 1:월, 2:화
 
     //오늘이 포함된 1주일(일요일, 월요일..... 토요일 순서대로)에서 할일이 있는 부분만 가져옴
