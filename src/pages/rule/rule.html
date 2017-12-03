@@ -119,11 +119,7 @@
         -->
   
       <ion-item *ngFor="let items2 of member_name">
-<<<<<<< HEAD
-        <button ion-button>{{items2.name}}</button>
-=======
         {{items2.name}}
->>>>>>> 8a532d47c4552c502afc1d5cd422f700060658cb
       </ion-item>
       <!--
       <ion-item *ngFor="let penal_l of penalty_rate">벌점 {{penal_l.late_p}}이고, </ion-item>
@@ -142,11 +138,7 @@
       <ion-card>
         <ion-item *ngFor="let late1 of setting_late">지각시 {{late1.late}}마다, </ion-item>
         <ion-item *ngFor="let penal_l of penalty_late">벌점 {{penal_l.late_p}}, </ion-item>
-<<<<<<< HEAD
-        <!--<ion-item *ngFor="let penal_e of penalty_early_leave">조퇴시 벌점{{penal_e.early_p}}, </ion-item>-->
-=======
         <ion-item *ngFor="let penal_e of penalty_early_leave">조퇴시 벌점{{penal_e.early_p}}, </ion-item>
->>>>>>> 8a532d47c4552c502afc1d5cd422f700060658cb
         <ion-item *ngFor="let penal_a of penalty_absence">무단 결석시 벌점{{penal_a.early_a}}, </ion-item>
         <ion-item *ngFor="let penal1 of penalty_score">총 벌점이 {{penal1.score_p}}이상일 때,</ion-item>
         <ion-item *ngFor="let items of penalty_text">해당 멤버는 {{items.text}}!!!!!!!!</ion-item>
