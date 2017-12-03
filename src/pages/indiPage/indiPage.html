@@ -7,8 +7,8 @@
 </ion-header>
 
 <ion-content padding>
-  <h1>미팅 코드: {{meetingCode}}</h1>
-  <h1>방장: {{leader}}</h1>
+  <h2>미팅 코드:{{meetingCode}}</h2>
+  <h3 class = "a">방장: {{leader}}</h3>
   <div *ngFor="let mInfo of meetingInfo |async">
     <p *ngIf="mInfo.done=='n'">
       {{mInfo.place}}<br> {{mInfo.dateTime}}
@@ -25,15 +25,16 @@
       <ion-avatar (click)="attendanceCheck(mtMem[0])" item-start *ngIf="mtMem[0].LatLonDiff.meetingCode!=meetingCode||mtMem[0].LatLonDiff.lat>0.03||mtMem[0].LatLonDiff.lon>0.03">
         <img src="../../assets/imgs/emptyCircle.png">
       </ion-avatar>
+      {{mtMem[0].name}}
 
-      <button ion-button (click)="GoMemInfo(mtMem)"><ion-icon name="person"></ion-icon>{{mtMem[0].name}}</button>
+      <button ion-button (click)="GoMemInfo(mtMem)" style="float:right;"><ion-icon name="person"></ion-icon></button>
 
     </ion-item>
   </ion-list>
 
-  <button ion-button color="primary" (click)="goEditMeetingRulePage()">규칙 설정</button>
-  <button ion-button color="primary" (click)="removeMember()">멤버 삭제</button>
-  <button ion-button color="primary" (click)="goEditMeetingInfoPage()">모임 시간&장소 정하기</button>
-  <button ion-button color="primary" (click)="goHistoryPage()">미팅 기록 보기</button>
-  <button ion-button blockk color="primary" (click)="getOut()">나가기</button>
+  <button ion-button color="primary" (click)="goEditMeetingInfoPage()" block>모임 시간&장소 정하기</button>
+  <button ion-button color="primary" (click)="goEditMeetingRulePage()" style="width:50%">벌점 기록 및 설정</button>
+  <button ion-button color="primary" (click)="removeMember()"style="width:50%">멤버 삭제</button>
+  <button ion-button color="primary" (click)="goHistoryPage()" inline-block>미팅 기록 보기</button>
+  <button ion-button blockk color="primary" (click)="getOut()" block >나가기</button>
 </ion-content>
