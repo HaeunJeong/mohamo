@@ -63,8 +63,6 @@ export class RulePage {
       })
     })
     this.member_name = m_name;
-    console.log('dfdf');
-    console.log('dfd');
 
     /*
       var penalty_score_temp = [];
@@ -109,24 +107,80 @@ export class RulePage {
 
   }
 
-  ionViewDidEnter() {//firebase에서 데이터 불러오기(총벌점, 지각, 지각벌점, 조퇴벌점, 무단결석벌점)
+  
 
-    var p_score;
-    firebase.database().ref('/allMeeting/' + this.meetingCode + '/penalty_score').once('value', function (snapshot) {
-      p_score = snapshot.val();
-      console.log("penal_score_check: ", p_score)
-    });
-    this.penalty_score = p_score
-
-
-
+  temp2() {
     var set_late;
     firebase.database().ref('/allMeeting/' + this.meetingCode + '/setting_late').once('value', function (snap) {
       set_late = snap.val();
       console.log("setting_late: ", set_late)
     });
     this.setting_late = set_late;
+  }
 
+
+  temp3()
+  {
+    var penalty_late1;
+    
+        firebase.database().ref('/allMeeting/' + this.meetingCode + '/penalty_late').once('value', function (snap2) {
+          penalty_late1 = snap2.val();
+          console.log("penalty_late: ", penalty_late1)
+        });
+        this.penalty_late = penalty_late1;
+  }
+
+  temp4()
+  {
+    var penalty_absence1;
+    
+        firebase.database().ref('/allMeeting/' + this.meetingCode + '/penalty_absence').once('value', function (snap4) {
+          penalty_absence1 = snap4.val();
+          console.log("penalty_absence: ", penalty_absence1)
+        });
+        this.penalty_absence = penalty_absence1;
+  }
+
+  temp1() {
+    var p_score;
+    firebase.database().ref('/allMeeting/' + this.meetingCode + '/penalty_score').once('value', function (snapshot) {
+      p_score = snapshot.val();
+      console.log("penal_score_check: ", p_score)
+    });
+    this.penalty_score = p_score
+  }
+
+  temp5()
+  {
+    var temp;
+    
+        firebase.database().ref('/allMeeting/' + this.meetingCode + '/penalty_text').once('value', function (snapshot) {
+          temp = snapshot.val(); //penalty text
+          console.log("temp: ", temp);
+        });
+    
+        this.penalty_text = temp;
+  }
+
+  ionViewDidEnter() {//firebase에서 데이터 불러오기(총벌점, 지각, 지각벌점, 조퇴벌점, 무단결석벌점)
+    /*
+        var p_score;
+        firebase.database().ref('/allMeeting/' + this.meetingCode + '/penalty_score').once('value', function (snapshot) {
+          p_score = snapshot.val();
+          console.log("penal_score_check: ", p_score)
+        });
+        this.penalty_score = p_score
+    */
+
+/*
+    var set_late;
+    firebase.database().ref('/allMeeting/' + this.meetingCode + '/setting_late').once('value', function (snap) {
+      set_late = snap.val();
+      console.log("setting_late: ", set_late)
+    });
+    this.setting_late = set_late;
+*/
+/*
     var penalty_late1;
 
     firebase.database().ref('/allMeeting/' + this.meetingCode + '/penalty_late').once('value', function (snap2) {
@@ -134,6 +188,7 @@ export class RulePage {
       console.log("penalty_late: ", penalty_late1)
     });
     this.penalty_late = penalty_late1;
+    */
     /*
         var early_leave_temp = [];
     
@@ -147,33 +202,37 @@ export class RulePage {
     
         this.penalty_early_leave = early_leave_temp;
     */
+    /*
     var penalty_absence1;
 
-    firebase.database().ref('/allMeeting/' + this.meetingCode + '/penalty_absence').once('value', function (snap4) {   
-         penalty_absence1 = snap4.val();
-        console.log("penalty_absence: ", penalty_absence1)
+    firebase.database().ref('/allMeeting/' + this.meetingCode + '/penalty_absence').once('value', function (snap4) {
+      penalty_absence1 = snap4.val();
+      console.log("penalty_absence: ", penalty_absence1)
     });
     this.penalty_absence = penalty_absence1;
-
+*/
+/*
     var temp;
 
-    firebase.database().ref('/allMeeting/' + this.meetingCode + '/penalty_text').once('value', function (snapshot) {    
-        temp = snapshot.val(); //penalty text
-        console.log("temp: ", temp);
+    firebase.database().ref('/allMeeting/' + this.meetingCode + '/penalty_text').once('value', function (snapshot) {
+      temp = snapshot.val(); //penalty text
+      console.log("temp: ", temp);
     });
 
     this.penalty_text = temp;
+*/
+    
   }
 
 
   late_fuction(selectedValue: any) {
     firebase.database().ref('/allMeeting/' + this.meetingCode).child('setting_late').set(selectedValue);
-    this.ionViewDidEnter();
+    this.temp2();
   }
 
   late_penal_fuction(selectedValue: any) {
     firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_late').set(selectedValue);
-    this.ionViewDidEnter();
+    this.temp3();
   }
   /*
     early_leave_fuction(selectedValue: any) {
@@ -183,13 +242,13 @@ export class RulePage {
   */
   absence_fuction(selectedValue: any) {
     firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_absence').set(selectedValue);
-    this.ionViewDidEnter();
+    this.temp4();
   }
 
   penalty_sum(selectedValue: any) {
     console.log('select: ', selectedValue)
     firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_score').set(selectedValue);
-    this.ionViewDidEnter();
+    this.temp1();
   }
 
 
@@ -197,7 +256,7 @@ export class RulePage {
   addPenalty(penalty) {
 
     firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_text').set(penalty); //패널티를 새로 만들어 데이터베이스에 저장하는 작업
-    this.ionViewDidEnter();
+    this.temp5();
     console.log("penalty:" + penalty);
   }
 

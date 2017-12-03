@@ -5,146 +5,146 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>Setting</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-<ion-content padding>
-  <ion-item>
-    <ion-label fixed> Rule Setting </ion-label>
-  </ion-item>
-  <ion-list>
-    <ion-item>
-      <ion-label>지각 시</ion-label>
-      <ion-select [(ngModel)]="something" (ionChange)="late_fuction($event)">
-        <ion-option value="1분">1분 단위로</ion-option>
-        <ion-option value="5분">5분 단위로</ion-option>
-        <ion-option value="10분">10분 단위로</ion-option>
-        <ion-option value="15분">15분 단위로</ion-option>
-        <ion-option value="20분">20분 단위로</ion-option>
-        <ion-option value="30분">30분 단위로</ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>벌점</ion-label>
-      <!--<ion-select [(ngModel)]="something2" ng-change="change_penal(something2)">-->
-      <ion-select [(ngModel)]="something2" (ionChange)="late_penal_fuction($event)">
-        <ion-option value="1점">1점</ion-option>
-        <!--
-          <ion-option value="2점">2점</ion-option>
-          <ion-option value="3점">3점</ion-option>
-          <ion-option value="4점">4점</ion-option>
-          <ion-option value="5점">5점</ion-option>
-          <ion-option value="10점">10점</ion-option>
-          -->
-      </ion-select>
-    </ion-item>
-    <!--
+    
+      <ion-navbar>
+        <ion-title>Setting</ion-title>
+      </ion-navbar>
+    
+    </ion-header>
+    
+    <ion-content padding>
       <ion-item>
-        <ion-label>조퇴 시</ion-label>
-        <ion-select [(ngModel)]="something3" (ionChange)="early_leave_fuction($event)">
-          <ion-option value="1점">벌점 1점</ion-option>
-          <ion-option value="2점">벌점 2점</ion-option>
-          <ion-option value="3점">벌점 3점</ion-option>
-          <ion-option value="4점">벌점 4점</ion-option>
-          <ion-option value="5점">벌점 5점</ion-option>
-          <ion-option value="10점">벌점 10점</ion-option>
-        </ion-select>
+        <ion-label fixed> Rule Setting </ion-label>
       </ion-item>
-    -->
-    <ion-item>
-      <ion-label>무단 결석 시</ion-label>
-      <ion-select [(ngModel)]="something5" (ionChange)="absence_fuction($event)">
-        <ion-option value="1점">벌점 1점</ion-option>
-        <ion-option value="2점">벌점 2점</ion-option>
-        <ion-option value="3점">벌점 3점</ion-option>
-        <ion-option value="4점">벌점 4점</ion-option>
-        <ion-option value="5점">벌점 5점</ion-option>
-        <ion-option value="10점">벌점 10점</ion-option>
-        <ion-option value="15점">벌점 10점</ion-option>
-        <ion-option value="20점">벌점 20점</ion-option>
-        <ion-option value="25점">벌점 25점</ion-option>
-        <ion-option value="30점">벌점 30점</ion-option>
-        <ion-option value="50점">벌점 50점</ion-option>
-        <ion-option value="100점">벌점 100점</ion-option>
-      </ion-select>
-    </ion-item>
-
-
-
-    <ion-item>
-      <ion-label>총 벌점이</ion-label>
-      <ion-select [(ngModel)]="Jebal" (ionChange)="penalty_sum($event)">
-        <ion-option value="1점">1점</ion-option>
-        <ion-option value="2점">2점</ion-option>
-        <ion-option value="3점">3점</ion-option>
-        <ion-option value="5점">5점</ion-option>
-        <ion-option value="10점">10점</ion-option>
-        <ion-option value="15점">15점</ion-option>
-        <ion-option value="20점">20점</ion-option>
-        <ion-option value="25점">25점</ion-option>
-        <ion-option value="30점">30점</ion-option>
-        <ion-option value="35점">35점</ion-option>
-        <ion-option value="40점">40점</ion-option>
-        <ion-option value="50점">50점</ion-option>
-        <ion-option value="100점">100점</ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label> 이상 일때, </ion-label>
-      <ion-input [(ngModel)]="penalty" type="text"></ion-input>
-    </ion-item>
-  </ion-list>
-
-
-  <button type="submit" (click)="addPenalty(penalty)" ion-button>Add</button>
-  <!--
-    <ion-list>
-      <ion-item *ngFor="let items of penalty_text">
-        {{items.text}}
-      </ion-item>
-    </ion-list>
-    -->
-  <ion-item>
-    <ion-label fixed> Member </ion-label>
-  </ion-item>
-  <ion-list>
-    <!--
-          <ion-item [(ngModel)]="example"></ion-item>
+      <ion-list>
+        <ion-item>
+          <ion-label>지각 시</ion-label>
+          <ion-select [(ngModel)]="something" (ionChange)="late_fuction($event)">
+            <ion-option value="1분">1분 단위로</ion-option>
+            <ion-option value="5분">5분 단위로</ion-option>
+            <ion-option value="10분">10분 단위로</ion-option>
+            <ion-option value="15분">15분 단위로</ion-option>
+            <ion-option value="20분">20분 단위로</ion-option>
+            <ion-option value="30분">30분 단위로</ion-option>
+          </ion-select>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label>벌점</ion-label>
+          <!--<ion-select [(ngModel)]="something2" ng-change="change_penal(something2)">-->
+          <ion-select [(ngModel)]="something2" (ionChange)="late_penal_fuction($event)">
+            <ion-option value="1점">1점</ion-option>
+            <!--
+              <ion-option value="2점">2점</ion-option>
+              <ion-option value="3점">3점</ion-option>
+              <ion-option value="4점">4점</ion-option>
+              <ion-option value="5점">5점</ion-option>
+              <ion-option value="10점">10점</ion-option>
+              -->
+          </ion-select>
+        </ion-item>
+        <!--
+          <ion-item>
+            <ion-label>조퇴 시</ion-label>
+            <ion-select [(ngModel)]="something3" (ionChange)="early_leave_fuction($event)">
+              <ion-option value="1점">벌점 1점</ion-option>
+              <ion-option value="2점">벌점 2점</ion-option>
+              <ion-option value="3점">벌점 3점</ion-option>
+              <ion-option value="4점">벌점 4점</ion-option>
+              <ion-option value="5점">벌점 5점</ion-option>
+              <ion-option value="10점">벌점 10점</ion-option>
+            </ion-select>
+          </ion-item>
         -->
-
-    <ion-item *ngFor="let items2 of member_name">
-      {{items2.name}} 
-    </ion-item>
-    <!--
-      <ion-item *ngFor="let penal_l of penalty_rate">벌점 {{penal_l.late_p}}이고, </ion-item>
-      <ion-item *ngFor="let late1 of setting_rate">지각시 {{late1.late}}마다, </ion-item>
-      <ion-item *ngFor="let penal_e of penalty_early_leave">조퇴시 벌점{{penal_e.early_p}}, </ion-item>
-      <ion-item *ngFor="let penal_a of penalty_absence">무단 결석시 벌점{{penal_a.early_a}}, </ion-item>
-      -->
-  </ion-list>
-
-
-  <!--<chart [options]="chartOptions" style="display:block" type="chart"></chart>-->
-
-  <ion-list>
-    <ion-card>
-      <ion-item >지각시 {{setting_late}}마다, </ion-item>
-      <ion-item >벌점 {{penalty_late}}, </ion-item>
-      <ion-item >무단 결석시 벌점{{penalty_absence}}, </ion-item>
-      <ion-item >총 벌점이 {{penalty_score}}이상일 때,</ion-item>
-      <ion-item>해당 멤버는 {{penalty_text}}!!!!!!!!</ion-item>
-
-
-    </ion-card>
-  </ion-list>
-
-
-  <button ion-button (click)="resetRuleSetting()">Reset Rule</button>
-
-</ion-content>
+        <ion-item>
+          <ion-label>무단 결석 시</ion-label>
+          <ion-select [(ngModel)]="something5" (ionChange)="absence_fuction($event)">
+            <ion-option value="1점">벌점 1점</ion-option>
+            <ion-option value="2점">벌점 2점</ion-option>
+            <ion-option value="3점">벌점 3점</ion-option>
+            <ion-option value="4점">벌점 4점</ion-option>
+            <ion-option value="5점">벌점 5점</ion-option>
+            <ion-option value="10점">벌점 10점</ion-option>
+            <ion-option value="15점">벌점 10점</ion-option>
+            <ion-option value="20점">벌점 20점</ion-option>
+            <ion-option value="25점">벌점 25점</ion-option>
+            <ion-option value="30점">벌점 30점</ion-option>
+            <ion-option value="50점">벌점 50점</ion-option>
+            <ion-option value="100점">벌점 100점</ion-option>
+          </ion-select>
+        </ion-item>
+    
+    
+    
+        <ion-item>
+          <ion-label>총 벌점이</ion-label>
+          <ion-select [(ngModel)]="Jebal" (ionChange)="penalty_sum($event)">
+            <ion-option value="1점">1점</ion-option>
+            <ion-option value="2점">2점</ion-option>
+            <ion-option value="3점">3점</ion-option>
+            <ion-option value="5점">5점</ion-option>
+            <ion-option value="10점">10점</ion-option>
+            <ion-option value="15점">15점</ion-option>
+            <ion-option value="20점">20점</ion-option>
+            <ion-option value="25점">25점</ion-option>
+            <ion-option value="30점">30점</ion-option>
+            <ion-option value="35점">35점</ion-option>
+            <ion-option value="40점">40점</ion-option>
+            <ion-option value="50점">50점</ion-option>
+            <ion-option value="100점">100점</ion-option>
+          </ion-select>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label> 이상 일때, </ion-label>
+          <ion-input [(ngModel)]="penalty" type="text"></ion-input>
+        </ion-item>
+      </ion-list>
+    
+    
+      <button type="submit" (click)="addPenalty(penalty)" ion-button>Add</button>
+      <!--
+        <ion-list>
+          <ion-item *ngFor="let items of penalty_text">
+            {{items.text}}
+          </ion-item>
+        </ion-list>
+        -->
+      <ion-item>
+        <ion-label fixed> Member </ion-label>
+      </ion-item>
+      <ion-list>
+        <!--
+              <ion-item [(ngModel)]="example"></ion-item>
+            -->
+    
+        <ion-item *ngFor="let items2 of member_name">
+          {{items2.name}} 
+        </ion-item>
+        <!--
+          <ion-item *ngFor="let penal_l of penalty_rate">벌점 {{penal_l.late_p}}이고, </ion-item>
+          <ion-item *ngFor="let late1 of setting_rate">지각시 {{late1.late}}마다, </ion-item>
+          <ion-item *ngFor="let penal_e of penalty_early_leave">조퇴시 벌점{{penal_e.early_p}}, </ion-item>
+          <ion-item *ngFor="let penal_a of penalty_absence">무단 결석시 벌점{{penal_a.early_a}}, </ion-item>
+          -->
+      </ion-list>
+    
+    
+      <!--<chart [options]="chartOptions" style="display:block" type="chart"></chart>-->
+    
+      <ion-list>
+        <ion-card>
+          <ion-item >지각시 {{setting_late}}마다, </ion-item>
+          <ion-item >벌점 {{penalty_late}}, </ion-item>
+          <ion-item >무단 결석시 벌점{{penalty_absence}}, </ion-item>
+          <ion-item >총 벌점이 {{penalty_score}}이상일 때,</ion-item>
+          <ion-item>해당 멤버는 {{penalty_text}}!!!!!!!!</ion-item>
+    
+    
+        </ion-card>
+      </ion-list>
+    
+    
+      <button ion-button (click)="resetRuleSetting()">Reset Rule</button>
+    
+    </ion-content>
