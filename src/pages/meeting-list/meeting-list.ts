@@ -28,6 +28,7 @@ export class MeetingListPage {
     var meeting_list=[];
     var mock_list =[];
 
+    console.log('dd');
       firebase.database().ref('/userProfile/' + this.userId + '/m_list').once('value').then(function(snapshot) {
       snapshot.forEach(function(childSnapshot){
                 temp = childSnapshot.key;
