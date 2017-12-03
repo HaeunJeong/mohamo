@@ -24,8 +24,8 @@ import { IonicPageModule } from 'ionic-angular';
 
 import { RulePage } from '../pages/rule/rule';
 import { MemberinfoPage } from '../pages/memberinfo/memberinfo';
-import { ChartModule } from 'angular2-highcharts';
-import * as highcharts from 'Highcharts';
+//import { ChartModule } from 'angular2-highcharts';
+//import * as highcharts from 'Highcharts';
 
 import { MypageSchedulePage } from '../pages/mypage-schedule/mypage-schedule';
 import { SetSchedulePage } from '../pages/set-schedule/set-schedule';
@@ -61,7 +61,7 @@ export const firebaseConfig = {
     IonicPageModule.forChild(GoogleMapPage),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    ChartModule.forRoot(highcharts)
+   // ChartModule.forRoot(highcharts)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
