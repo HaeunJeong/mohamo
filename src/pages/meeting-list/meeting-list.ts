@@ -65,8 +65,8 @@ export class MeetingListPage {
       newMeetingKey =  firebase.database().ref('/userProfile/'+this.userId).child('m_list').push(true).key;
       console.log(newMeetingKey);
 
-      firebase.database().ref('/allMeeting/'+newMeetingKey).child('member').child(this.userId).set(true);
-      firebase.database().ref('/allMeeting/'+newMeetingKey+'/member/'+ this.userId).child('personal_penalty').set(0);
+      firebase.database().ref('/allMeeting/'+newMeetingKey).child('member').child(this.userId).set({personal_penalty:0});
+      //firebase.database().ref('/allMeeting/'+newMeetingKey+'/member/'+ this.userId).child('personal_penalty').set(0);
       firebase.database().ref('/allMeeting/'+newMeetingKey).child('title').set(meeting_title);
       firebase.database().ref('/allMeeting/'+newMeetingKey).child('leader').set({userId:this.userId});
 
