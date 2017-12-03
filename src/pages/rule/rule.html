@@ -138,7 +138,7 @@
       <ion-item *ngFor="let penal_l of penalty_late">벌점 {{penal_l.late_p}}, </ion-item>
       <ion-item *ngFor="let penal_e of penalty_early_leave">조퇴시 벌점{{penal_e.early_p}}, </ion-item>
       <ion-item *ngFor="let penal_a of penalty_absence">무단 결석시 벌점{{penal_a.early_a}}, </ion-item>
-      <ion-item *ngFor="let penal1 of penalty_score">총 벌점이 {{penal1.score_p}}이상일 때,</ion-item>
+      <ion-item *ngFor="let penal1 of penalty_score">총 벌점이 {{penalty_score}}이상일 때,</ion-item>
       <ion-item *ngFor="let items of penalty_text">해당 멤버는 {{items.text}}!!!!!!!!</ion-item>
 
 

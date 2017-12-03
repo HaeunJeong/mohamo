@@ -21,7 +21,7 @@ export class RulePage {
   member_name = [];
   penalty_text = [];
   member_key = "0"
-  penalty_score = [];
+  penalty_score;
   setting_late = [];
   penalty_late = [];
   //penalty_early_leave = [];
@@ -109,16 +109,16 @@ export class RulePage {
 
   ionViewDidEnter() {//firebase에서 데이터 불러오기(총벌점, 지각, 지각벌점, 조퇴벌점, 무단결석벌점)
     var penalty_score_temp = [];
-
+    var p_score;
     firebase.database().ref('/allMeeting/' + this.meetingCode + '/penalty_score').once('value').then(function (snapshot) {
       snapshot.forEach(function (childSnapshot) {
-        var p_score = childSnapshot.val();
+        p_score = childSnapshot.val();
         console.log("penal_score_check: ", p_score)
         penalty_score_temp.push({ score_p: p_score });
       });
     });
 
-    this.penalty_score = penalty_score_temp;
+    this.penalty_score = p_score;
 
     var late_setting_temp = [];
 
@@ -212,12 +212,12 @@ export class RulePage {
 
   
   late_fuction(selectedValue: any) {
-    firebase.database().ref('/allMeeting/' + this.meetingCode).child('setting_late').push(selectedValue);
+    firebase.database().ref('/allMeeting/' + this.meetingCode).child('setting_late').set(selectedValue);
     this.ionViewDidEnter();
   }
 
   late_penal_fuction(selectedValue: any) {
-    firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_late').push(selectedValue);
+    firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_late').set(selectedValue);
     this.ionViewDidEnter();
   }
 /*
@@ -227,13 +227,13 @@ export class RulePage {
   }
 */
   absence_fuction(selectedValue: any) {
-    firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_absence').push(selectedValue);
+    firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_absence').set(selectedValue);
     this.ionViewDidEnter();
   }
 
   penalty_sum(selectedValue: any) {
     console.log('select: ', selectedValue)
-    firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_score').push(selectedValue);
+    firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_score').set(selectedValue);
     this.ionViewDidEnter();
   }
 
@@ -241,7 +241,7 @@ export class RulePage {
 
   addPenalty(penalty) {
 
-    firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_text').push(penalty); //패널티를 새로 만들어 데이터베이스에 저장하는 작업
+    firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_text').set(penalty); //패널티를 새로 만들어 데이터베이스에 저장하는 작업
     this.ionViewDidEnter();
     console.log("penalty:" + penalty);
   }
