@@ -63,6 +63,7 @@ export class RulePage {
       })
     })
     this.member_name = m_name;
+    console.log('dfdf');
 
     /*
       var penalty_score_temp = [];
@@ -165,9 +166,15 @@ export class RulePage {
     //저장한 곳에서 데이터를 가져오는 작업
 
     //멤버마다 데이터로 현재 벌점 수치 확인하기(아직 진행중)
+<<<<<<< HEAD
     var ex;
     ex = { name: 'aa', data: [this.example2, 0, 4] };
 
+=======
+    var ex; 
+    ex = {name: 'aa', data: [this.example2, 0, 4]};
+/*
+>>>>>>> 69a9168d7bb0f8bd7aa40393c4b2eccca9b20acb
     this.chartOptions = {
       chart: {
         type: 'bar'
@@ -188,7 +195,7 @@ export class RulePage {
         //console.log("과연?:", ex),
         { name: 'Max', data: [10, 10, 10] }
       ]
-    }
+    }*/
   }
 
 
