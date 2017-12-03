@@ -20,10 +20,10 @@
     <ion-item *ngFor="let mtMem of mtMemList"><!--(click)="attendanceCheck(mtMem[0])">-->
       
       <ion-avatar (click)="attendanceCheck(mtMem[0])" item-start *ngIf="mtMem[0].LatLonDiff.meetingCode==meetingCode&&mtMem[0].LatLonDiff.lat<=0.03&&mtMem[0].LatLonDiff.lon<=0.03">
-        <img src="../../assets/imgs/smile.png">
+        <img src="https://lh6.googleusercontent.com/j1uSWihZU2UMSS-Ixx723Yff7Gmd6SGliD3k4k666_C8ksnREWJeLazofqv0iyJykOm3AjSrpqR2F_ZZmqP0=w1920-h921">
       </ion-avatar>
       <ion-avatar (click)="attendanceCheck(mtMem[0])" item-start *ngIf="mtMem[0].LatLonDiff.meetingCode!=meetingCode||mtMem[0].LatLonDiff.lat>0.03||mtMem[0].LatLonDiff.lon>0.03">
-        <img src="../../assets/imgs/emptyCircle.png">
+        <img src="https://lh5.googleusercontent.com/IkYHhyrZbMECl6zSfwpVpkmImg6BNp-eVghN48BQXFkQA6XlDI6IXSx7UIVCOpqAeqCkQfN6AYJupythvDHX=w1920-h921-rw">
       </ion-avatar>
     
       <button ion-button (click)="GoMemInfo(mtMem)"><ion-icon name="person"></ion-icon>{{mtMem[0].name}}</button>
