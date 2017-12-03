@@ -31,8 +31,9 @@ export class IndiPagePage {
   meetingCode: string;
   meetingTitle: string = null;
   geo;
-  score = 0;
-
+  init_score = null;
+  ppp_ttt;
+  
   constructor(
     public navCtrl: NavController,
     public af: AngularFireDatabase,
@@ -42,10 +43,7 @@ export class IndiPagePage {
     this.userId = firebase.auth().currentUser.uid;
     this.meetingCode = navParams.data;
     this.geo = this.geolocation;
-
-    firebase.database().ref('/allMeeting/'+ this.meetingCode + '/member/' + this.userId + '/personal_penalty').push(this.score);
-    console.log("개인벌점점수: ",this.score )
-
+  
 
     //this.navCtrl.push(RulePage, {godata: this.meetingCode});//rulepage로 데이터 이동
     let dataURL = this.af.database;
@@ -96,12 +94,12 @@ export class IndiPagePage {
     );
 
 
-    
+
     //해당 모임 약속 시간 정보 가져오기 OK
     this.meetingInfo = af.list('/allMeeting/' + this.meetingCode + '/infoToMeet');
   }
 
- 
+
   //출석 위해 자기 이름 클릭시 발생하는 이벤트
   //미팅은 하루에 한번만 있는 걸로 가정. 
   attendanceCheck(member: any) {
@@ -166,6 +164,7 @@ export class IndiPagePage {
           //지각 여부 체크
           if (timeLeft < 0) {
             alert("당신은 " + Math.abs(timeLeft) + "분 지각하셨습니다.");
+
           }
           else if (timeLeft > 10) {
             alert("출석은 모임 시간 10분 전 부터 가능합니다.");
@@ -200,7 +199,73 @@ export class IndiPagePage {
         }
       });
 
-    }
+      
+      
+      
+      var example = 13;
+      var personal = 0;
+      //벌점 체크하기
+      var temp1
+      firebase.database().ref('/allMeeting/' + this.meetingCode + '/setting_late').once('value').then(function (snapshot) {
+        snapshot.forEach(function (childSnap1) {
+          temp1 = childSnap1.val();
+          console.log("분당temp1:", temp1)
+        })
+      })
+      this.ppp_ttt = temp1;
+      console.log("etetete", this.ppp_ttt)
+      
+      var person_penalty
+      firebase.database().ref('/allMeeting/' + this.meetingCode + '/member/' + this.userId + '/personal_penalty').once('value', function (snapshot2) {
+        person_penalty = snapshot2.val();
+        console.log("개인벌점:", person_penalty)
+      })
+      
+
+
+      
+      if(temp1 == "1분")
+      {
+          person_penalty += timeLeft;
+      }
+      if(temp1 == "5분")
+      {
+        person_penalty += timeLeft/5;
+      }
+      if(temp1 == "10분")
+      {
+        person_penalty += timeLeft/10;
+      }
+      if(temp1 == "15분")
+      {
+        person_penalty += timeLeft/15;
+      }
+      if(temp1 == "20분")
+      {
+        person_penalty += timeLeft/20;
+      }
+      if(temp1 == "30분")
+      {
+        person_penalty += timeLeft/30;
+      }
+  
+
+  
+      if (this.ppp_ttt == "1분") {
+        personal += example;
+        console.log("결과: ", personal)
+        console.log("etetete2", this.ppp_ttt)
+      }
+
+
+
+
+
+
+
+
+
+    } 
   }
 
 
@@ -274,11 +339,16 @@ export class IndiPagePage {
   }
 
   goEditMeetingRulePage() {
+    //firebase.database().ref('/allMeeting/' +  this.meetingCode + '/member/').once('value').thenforEach(function (snapshot){
+
+
     var getThis = this;
-    this.navCtrl.push(RulePage,  {godata: getThis.meetingCode}, { animate: false });
+    this.navCtrl.push(RulePage, { godata: getThis.meetingCode }, { animate: false });
   }
-  GoMemInfo(mtMem){
+
+  GoMemInfo(mtMem) {
     console.log("a: ", mtMem[0].$key)//예ㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖ
-    this.navCtrl.push(MemberinfoPage, {gogodata: mtMem[0].$key});
+    this.navCtrl.push(MemberinfoPage, { gogodata: mtMem[0].$key });
   }
+
 }

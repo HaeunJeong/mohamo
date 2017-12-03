@@ -24,7 +24,7 @@ export class RulePage {
   penalty_score = [];
   setting_late = [];
   penalty_late = [];
-  penalty_early_leave = [];
+  //penalty_early_leave = [];
   penalty_absence = [];
 
   Jebal: string = '';
@@ -32,6 +32,8 @@ export class RulePage {
   meetingCode: string;
   userName: string;
   chartOptions: any;
+  example = 'abcdef'
+  example2 = 8;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.meetingCode = this.navParams.get('godata');
@@ -141,7 +143,7 @@ export class RulePage {
     });
 
     this.penalty_late = late_penalty_temp;
-
+/*
     var early_leave_temp = [];
 
     firebase.database().ref('/allMeeting/' + this.meetingCode + '/penalty_early_leave').once('value').then(function (snap3) {
@@ -153,7 +155,7 @@ export class RulePage {
     });
 
     this.penalty_early_leave = early_leave_temp;
-
+*/
     var absence_temp = [];
 
     firebase.database().ref('/allMeeting/' + this.meetingCode + '/penalty_absence').once('value').then(function (snap4) {
@@ -163,6 +165,8 @@ export class RulePage {
         absence_temp.push({ early_a: penalty_absence });
       });
     });
+
+    this.penalty_absence = absence_temp;
 
     var temp;
     var penal_ = [];
@@ -176,10 +180,12 @@ export class RulePage {
     });
 
     this.penalty_text = penal_;
+    
     //저장한 곳에서 데이터를 가져오는 작업
 
     //멤버마다 데이터로 현재 벌점 수치 확인하기(아직 진행중)
-    this.penalty_absence = absence_temp;
+    var ex; 
+    ex = {name: 'aa', data: [this.example2, 0, 4]};
 
     this.chartOptions = {
       chart: {
@@ -196,17 +202,15 @@ export class RulePage {
           text: 'Penalty score'
         }
       },
-      series: [{
-        name: this.userName,
-
-        data: [1, 0, 4]
-      }, {
-        name: 'Max',
-        data: [10, 10, 10]
-      }]
+      series: [
+        ex, 
+        //console.log("과연?:", ex),
+        {name: 'Max', data: [10, 10, 10]}
+      ]
     }
   }
 
+  
   late_fuction(selectedValue: any) {
     firebase.database().ref('/allMeeting/' + this.meetingCode).child('setting_late').push(selectedValue);
     this.ionViewDidEnter();
@@ -216,12 +220,12 @@ export class RulePage {
     firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_late').push(selectedValue);
     this.ionViewDidEnter();
   }
-
+/*
   early_leave_fuction(selectedValue: any) {
     firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_early_leave').push(selectedValue);
     this.ionViewDidEnter();
   }
-
+*/
   absence_fuction(selectedValue: any) {
     firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_absence').push(selectedValue);
     this.ionViewDidEnter();
@@ -253,7 +257,7 @@ export class RulePage {
     firebase.database().ref('/allMeeting/' + this.meetingCode).child('setting_late').remove();
     firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_score').remove();
     firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_late').remove();
-    firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_early_leave').remove();
+    //firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_early_leave').remove();
     firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_absence').remove();
     firebase.database().ref('/allMeeting/' + this.meetingCode).child('penalty_text').remove();
     this.ionViewDidEnter();

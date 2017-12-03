@@ -45,6 +45,7 @@ export class MeetingListPage {
     },this);
   });
 
+  
   this.title_list = mock_list;
 
   
@@ -65,6 +66,8 @@ export class MeetingListPage {
       console.log(newMeetingKey);
 
       firebase.database().ref('/allMeeting/'+newMeetingKey).child('member').child(this.userId).set(true);
+      //firebase.database().ref('/allMeeting/'+newMeetingKey).child('member').child(this.userId).child('personal_penalty').set(0);
+      firebase.database().ref('/allMeeting/'+newMeetingKey+'/member/'+ this.userId).child('personal_penalty').set(0);
       firebase.database().ref('/allMeeting/'+newMeetingKey).child('title').set(meeting_title);
 
       this.ionViewDidEnter();
@@ -81,16 +84,13 @@ export class MeetingListPage {
     let id = this.userId;
     //let refresh = this.ionViewDidEnter;
 
-  //저거 들어가는게 실패했을 경우는 어떻게 판별하지???
-  //입력끝나면 지워지도록!!
-
-
     firebase.database().ref('/allMeeting/').once('value').then(function(snapshot){
       if(snapshot.hasChild(code)){
         console.log("data exist");
         firebase.database().ref('/allMeeting/'+code+'/member').child(id).set(true);
         firebase.database().ref('/userProfile/'+id+'/m_list').child(code).set(true);
-        
+        //firebase.database().ref('/allMeeting/'+code +'/member').child(id).child('personal_penalty').set(0);
+        firebase.database().ref('/allMeeting/'+code +'/member/'+id).child('personal_penalty').set(0);
       }
       else{
         error_nodata = alert.create({
@@ -136,7 +136,68 @@ export class MeetingListPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MeetingListPage');
+
+     //처음 미팅리스트페이지에 들어오면 스케쥴 부분 디비 자동생성
+    var dayOf11 = ['Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue'];
+    var dayOf12 = ['Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu'];
+   
+    
+    var getThis = this;
+    getThis.userId = firebase.auth().currentUser.uid;
+    firebase.database().ref('/userProfile/' + getThis.userId + '/schedule').once('value', function (snapshot) {
+
+      if (snapshot.val() == null) {
+        console.log('생성댐'); //회원가입할때 넣기!
+
+        for (var date = 1; date <= 30; date++) {
+          for (var alltime = 1; alltime <= 9; alltime++) {
+            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+              .child('y_17').child('m_11').child('d_' + date.toString())
+              .child(dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '00').set(false);
+            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+              .child('y_17').child('m_11').child('d_' + date.toString())
+              .child(dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '30').set(false);
+          }
+          for (var alltime = 10; alltime <= 24; alltime++) {
+            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+              .child('y_17').child('m_11').child('d_' + date.toString())
+              .child(dayOf11[(date - 1) % 7]).child(alltime + ':' + '00').set(false);
+            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+              .child('y_17').child('m_11').child('d_' + date.toString())
+              .child(dayOf11[(date - 1) % 7]).child(alltime + ':' + '30').set(false);
+            //getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '00', value: false });
+
+            // getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '30', value: false });
+          }
+        }
+        for (var date = 1; date <= 31; date++) {
+          for (var alltime = 1; alltime <= 9; alltime++) {
+            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+              .child('y_17').child('m_12').child('d_' + date.toString())
+              .child(dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '00').set(false);
+            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+              .child('y_17').child('m_12').child('d_' + date.toString())
+              .child(dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '30').set(false);
+          }
+          for (var alltime = 10; alltime <= 24; alltime++) {
+            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+              .child('y_17').child('m_12').child('d_' + date.toString())
+              .child(dayOf11[(date - 1) % 7]).child(alltime + ':' + '00').set(false);
+            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+              .child('y_17').child('m_12').child('d_' + date.toString())
+              .child(dayOf11[(date - 1) % 7]).child(alltime + ':' + '30').set(false);
+            //getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '00', value: false });
+
+            // getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '30', value: false });
+          }
+        }
+      }
+      else {
+        console.log('생성안댐');
+        // firebase.database().ref('/userProfile/' + getThis.userId + '/schedule/y_17/m_11/d_22/Wed').child('12:' + '00').set("할일있다");
+        //firebase.database().ref('/userProfile/' + getThis.userId + '/schedule/y_17/m_11/d_20/Mon').child('15:' + '30').set("할일있다");
+      }
+    });
   }
 
   goMeetingPage(Meeting_Simple){

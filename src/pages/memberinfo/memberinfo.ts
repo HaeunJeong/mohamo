@@ -21,6 +21,7 @@ export class MemberinfoPage {
   person_name = [];
   phone_number = [];
   mail_name = [];
+  exampledata;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     var temp;
@@ -43,14 +44,23 @@ export class MemberinfoPage {
     this.mail_name = m_name;
 
 
-    var temp2;
-    var p_number = []
 
-    firebase.database().ref('/userProfile/' + this.userId + '/phone').once('value', function (snapshot) {
-      temp2 = snapshot.val();
+    var p_number = [];
+    var p_number2=[];//요기 내생각에는 snapshot써서 한바퀴 돌아야 되가주고 배열만들어서 해야되는거아님?
+    var temp4;
+    firebase.database().ref('/userProfile/' + this.userId + '/phone_number').once('value', function (snapshot) {
+      var temp2 = snapshot.val();
+      var temp3 = snapshot.val();
+      temp4 = snapshot.val();
+      console.log('check:', temp4);
       p_number.push({ phone: temp2 });
+      p_number2.push({ phone2: temp3 });
+      console.log('phone2: ', temp3);
     })
     this.phone_number = p_number;
+    this.exampledata = p_number2;
+    this.exampledata = temp4;
+    console.log("보여줭:", this.exampledata);
   }
 
   ionViewDidLoad() {
