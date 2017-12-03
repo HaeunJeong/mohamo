@@ -65,9 +65,8 @@ export class MeetingListPage {
       newMeetingKey =  firebase.database().ref('/userProfile/'+this.userId).child('m_list').push(true).key;
       console.log(newMeetingKey);
 
-      firebase.database().ref('/allMeeting/'+newMeetingKey).child('member').child(this.userId).set(true);
-      //firebase.database().ref('/allMeeting/'+newMeetingKey).child('member').child(this.userId).child('personal_penalty').set(0);
-      firebase.database().ref('/allMeeting/'+newMeetingKey+'/member/'+ this.userId).child('personal_penalty').set(0);
+      firebase.database().ref('/allMeeting/'+newMeetingKey).child('member').child(this.userId).set({personal_penalty:0});
+      //firebase.database().ref('/allMeeting/'+newMeetingKey+'/member/'+ this.userId).child('personal_penalty').set(0);
       firebase.database().ref('/allMeeting/'+newMeetingKey).child('title').set(meeting_title);
       firebase.database().ref('/allMeeting/'+newMeetingKey).child('leader').set({userId:this.userId});
 
@@ -88,10 +87,8 @@ export class MeetingListPage {
     firebase.database().ref('/allMeeting/').once('value').then(function(snapshot){
       if(snapshot.hasChild(code)){
         console.log("data exist");
-        firebase.database().ref('/allMeeting/'+code+'/member').child(id).set(true);
+        firebase.database().ref('/allMeeting/'+code+'/member').child(id).set({personal_penalty:0});
         firebase.database().ref('/userProfile/'+id+'/m_list').child(code).set(true);
-        //firebase.database().ref('/allMeeting/'+code +'/member').child(id).child('personal_penalty').set(0);
-        firebase.database().ref('/allMeeting/'+code +'/member/'+id).child('personal_penalty').set(0);
       }
       else{
         error_nodata = alert.create({
