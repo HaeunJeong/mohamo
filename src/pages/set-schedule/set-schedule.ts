@@ -34,7 +34,7 @@ export class SetSchedulePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loadingCtrl: LoadingController) {
-      this.navParams.get('MypageSchedulePage').ionViewDidLoad();
+      //this.navParams.get('MypageSchedulePage').ionViewDidLoad();
       var getThis = this;
       this.userId = firebase.auth().currentUser.uid;
       this.schedules_sun = this.navParams.get('sun');
@@ -90,7 +90,7 @@ export class SetSchedulePage {
   addSchedule() {
     var getThis = this;
     getThis.navCtrl.pop();
-
+    this.navParams.get('MypageSchedulePage').ionViewDidLoad();
   }
 
 }

@@ -38,7 +38,7 @@ export class SetTodoPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loadingCtrl: LoadingController, public events: Events) {
 
-      this.navParams.get('MypageSchedulePage').ionViewDidLoad();
+      //this.navParams.get('MypageSchedulePage').ionViewDidLoad();
       var getThis = this;
       this.userId = firebase.auth().currentUser.uid;
       this.schedules_sun = this.navParams.get('sun');
@@ -84,8 +84,10 @@ export class SetTodoPage {
   
   addSchedule() {
     var getThis = this;
-    this.events.publish('reload');
+    //this.events.publish('reload');
+    this.navParams.get('MypageSchedulePage').ionViewDidLoad();
     getThis.navCtrl.pop();
+    
   }
 
 
