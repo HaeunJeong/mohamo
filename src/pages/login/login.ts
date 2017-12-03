@@ -32,9 +32,9 @@ export class LoginPage {
     public authProvider:AuthProvider, formBuilder:FormBuilder) {
 
       this.loginForm = formBuilder.group({
-        email: ['nicehe74@gmail.com', Validators.compose([Validators.required,
+        email: [, Validators.compose([Validators.required,
         EmailValidator.isValid])],
-        password: ['dkwkdkwk77', Validators.compose([Validators.required,
+        password: [, Validators.compose([Validators.required,
         Validators.minLength(6)])]
         });
    

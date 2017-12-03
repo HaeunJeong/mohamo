@@ -187,7 +187,7 @@ export class MypageSchedulePage {
       thu: this.schedules_thu,
       fri: this.schedules_fri,
       sat: this.schedules_sat,
-      SetSchedulePage:this
+      MypageSchedulePage:this
     });
   }
 
@@ -201,7 +201,7 @@ export class MypageSchedulePage {
       thu: this.schedules_thu,
       fri: this.schedules_fri,
       sat: this.schedules_sat,
-      SetTodoPage:this
+      MypageSchedulePage:this
     });
 
     // this.events.subscribe('reload',() => {

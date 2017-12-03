@@ -34,15 +34,16 @@ export class SetSchedulePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loadingCtrl: LoadingController) {
+      this.navParams.get('MypageSchedulePage').ionViewDidLoad();
       var getThis = this;
       this.userId = firebase.auth().currentUser.uid;
-    this.schedules_sun = this.navParams.get('sun').ionViewDidLoad() ;
-    this.schedules_mon = this.navParams.get('mon').ionViewDidLoad();
-    this.schedules_tue = this.navParams.get('tue').ionViewDidLoad();
-    this.schedules_wed = this.navParams.get('wed').ionViewDidLoad();
-    this.schedules_thu = this.navParams.get('thu').ionViewDidLoad();
-    this.schedules_fri = this.navParams.get('fri').ionViewDidLoad();
-    this.schedules_sat = this.navParams.get('sat').ionViewDidLoad();
+      this.schedules_sun = this.navParams.get('sun');
+      this.schedules_mon = this.navParams.get('mon');
+      this.schedules_tue = this.navParams.get('tue');
+      this.schedules_wed = this.navParams.get('wed');
+      this.schedules_thu = this.navParams.get('thu');
+      this.schedules_fri = this.navParams.get('fri');
+      this.schedules_sat = this.navParams.get('sat');
 
     var sun_date_ = getThis.schedules_sun[0].date.split('_');
     var mon_date_ = getThis.schedules_mon[0].date.split('_');
