@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { HomePage } from '../home/home';
 import * as firebase from 'firebase';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 import { MypageSchedulePage } from '../mypage-schedule/mypage-schedule';

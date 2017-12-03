@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { FirebaseListObservable, AngularFireDatabase} from 'angularfire2/database';
 /**
  * Generated class for the ShowHistoryPage page.
  *
@@ -15,11 +15,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ShowHistoryPage {
 
+  meetingTitle: string;
   meetingCode: string;
+  meetingInfo: FirebaseListObservable<any[]>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,  public af: AngularFireDatabase,) {
   
-    this.meetingCode = navParams.data;
+    this.meetingTitle = navParams.get('meetingTitle');
+    this.meetingCode = navParams.get('meetingCode');
+    //console.log(this.meetingTitle+ "  "+this.meetingCode);
+    this.meetingInfo = af.list('/allMeeting/' + this.meetingCode + '/infoToMeet');
   }
 
 

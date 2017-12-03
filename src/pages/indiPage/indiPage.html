@@ -9,7 +9,6 @@
 <ion-content padding>
   Code: {{meetingCode}}
   <div *ngFor="let mInfo of meetingInfo |async">
-    <!--<p *ngIf="mInfo.place=='신매아이프라임'||mInfo.place=='사월역'">-->
       <p *ngIf="mInfo.done=='n'">
       {{mInfo.place}}<br> {{mInfo.dateTime}}
     </p>
@@ -34,5 +33,5 @@
   <button ion-button color="primary" (click)="removeMember()">멤버 삭제</button>
   <button ion-button color="primary" (click)="goEditMeetingInfoPage()">모임 시간&장소 정하기</button>
   <button ion-button color="primary" (click)="goHistoryPage()">미팅 기록 보기</button>
-
+  <button ion-button blockk color="primary" (click)="getOut()">나가기</button>
 </ion-content>

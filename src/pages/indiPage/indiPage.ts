@@ -91,12 +91,52 @@ export class IndiPagePage {
     );
 
 
-    
+
     //해당 모임 약속 시간 정보 가져오기 OK
     this.meetingInfo = af.list('/allMeeting/' + this.meetingCode + '/infoToMeet');
+
+    //각 미팅별 month, day 체크=> 현재보다 지난 meeting일시 done 넣어주면서 화면에서 안 보이도록 만든다.
+    this.meetingInfo.subscribe(
+      meetArray => {
+        var today = new Date();
+        var meetInfo = null;
+        meetArray.forEach(meetInfo => {
+          //console.log(meetInfo.$key);
+
+          console.log(meetInfo);
+          if (meetInfo.done == 'n') {
+            var meetDateTemp1 = meetInfo.dateTime.split("월 ");
+            var meetDateTemp2 = meetDateTemp1[1].split("일 ");
+            var meetDateTemp3 = meetDateTemp2[1].split("-");
+            var meetDateTemp4 = meetDateTemp3[1].split(":");
+
+            var meetInfoMonth = meetDateTemp1[0];
+            var meetInfoDay = meetDateTemp2[0];
+            var meetInfoEndHr = meetDateTemp4[0];
+            var meetInfoEndMin = meetDateTemp4[1];
+
+            var todayMonth = today.getMonth() + 1;
+            var todayDay = today.getDate();
+            var TodayHr = today.getHours();
+            var TodayMin = today.getMinutes();
+
+
+            if (meetInfo.done == 'n' &&
+              ((todayMonth > meetInfoMonth) ||
+                (todayMonth == meetInfoMonth && todayDay > meetInfoDay) ||
+                (todayMonth == meetInfoMonth && todayDay == meetInfoDay && TodayHr > meetInfoEndHr) ||
+                (todayMonth == meetInfoMonth && todayDay == meetInfoDay && TodayHr == meetInfoEndHr && TodayMin > meetInfoEndMin))) {
+              this.af.database.ref('/allMeeting/' + this.meetingCode + '/infoToMeet/' + meetInfo.$key + '/').update({ done: 'y' });
+            }
+          }
+        });
+
+      }
+
+    );
   }
 
- 
+
   //출석 위해 자기 이름 클릭시 발생하는 이벤트
   //미팅은 하루에 한번만 있는 걸로 가정. 
   attendanceCheck(member: any) {
@@ -129,20 +169,23 @@ export class IndiPagePage {
 
         snapshot.forEach(snap => {
 
-          if (snap.val().dateTime.indexOf(yyyy + "-" + mm + "-" + dd) != -1) {
+          //console.log(snap.val().dateTime);
+          //console.log(yyyy + "-" + mm + "-" + dd);
 
+          if (snap.val().dateTime.indexOf(mm + "월 " + dd + "일") != -1) {
             // 있으면 미팅 장소 좌표 얻어오기. 
             mtLat = snap.val().LatLon.lat;
             mtLon = snap.val().LatLon.lon;
 
+            //12월 3일 15:00-17:00
             //정해진 미팅시간 받아오기. 
-            var dtSplit = snap.val().dateTime.split(" ");
-            var dSplit = dtSplit[0].split("-");
-            var tSplit = dtSplit[1].split(":");
-            meetingDate = new Date(dSplit[0], dSplit[1], dSplit[2], tSplit[0], tSplit[1]);
-            timeLeft = (meetingDate.getTime() - todayTemp.getTime()) / 60000;
+            var dtSplit = snap.val().dateTime.split("일 ");
+            var dSplit = dtSplit[0].split("월 ");
+            var tSplitTmp = dtSplit[1].split("-");
+            var tSplit = tSplitTmp[0].split(":");
 
-            alert("해당 모임은 오늘 약속이 있습니다.");
+            meetingDate = new Date(2017, dSplit[0], dSplit[1], tSplit[0], tSplit[1]);
+            timeLeft = (meetingDate.getTime() - todayTemp.getTime()) / 60000;
 
             meetingNum++;
             return false;
@@ -151,12 +194,15 @@ export class IndiPagePage {
 
         if (meetingNum == 0) {
           alert("해당 모임은 오늘 약속이 없습니다.");
+          //return false;
+        } else {
+          alert("해당 모임은 오늘 약속이 " + meetingNum + "개 있습니다.");
         }
 
-        return false;
 
       }).then(result => {
-
+        console.log("why?");
+        console.log(timeLeft);
         if (meetingNum != 0) {
           //지각 여부 체크
           if (timeLeft < 0) {
@@ -188,6 +234,7 @@ export class IndiPagePage {
                   meetingCode: this.meetingCode
                   //출석 로그 남기기 ->해야 해. 
                 });
+                alert("출석처리 되었습니다");
                 return false;
               }
             });
@@ -269,11 +316,20 @@ export class IndiPagePage {
   }
 
   goEditMeetingRulePage() {
-    this.navCtrl.push(RulePage, {godata: this.meetingCode}, { animate: false });
+    this.navCtrl.push(RulePage, { godata: this.meetingCode }, { animate: false });
   }
 
   goHistoryPage() {
-    this.navCtrl.push(ShowHistoryPage, this.meetingCode);
+    this.navCtrl.push(ShowHistoryPage, { meetingCode: this.meetingCode, meetingTitle: this.meetingTitle });
+  }
+
+  getOut() {
+    if (confirm("미팅을 나가시겠습니까?")) {
+      var idToDel = this.af.object('/allMeeting/' + this.meetingCode + '/member/' + this.userId);
+      idToDel.remove();
+      var meetingToDel = this.af.object('/userProfile/' + this.userId + '/m_list/' + this.meetingCode);
+      meetingToDel.remove();
+    }
   }
 
 }

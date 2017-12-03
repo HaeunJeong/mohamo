@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MeetingListPage } from '../meeting-list/meeting-list';
 import * as firebase from 'firebase';
 import { GoogleMapPage } from '../google-map/google-map';
+import { IndiPagePage } from '../indiPage/indiPage';
 
 @IonicPage()
 @Component({
@@ -457,7 +458,10 @@ export class MatchingTimePage {
     firebase.database().ref('/allMeeting/'+this.meeting_code+'/infoToMeet/'+new_time).child('dateTime').set(selected_meeting_time);
     firebase.database().ref('/allMeeting/'+this.meeting_code+'/infoToMeet/'+new_time).child('place').set(this.m_place);
     firebase.database().ref('/allMeeting/'+this.meeting_code+'/infoToMeet/'+new_time).child('done').set('n');
+    
+    alert("정상등록되었습니다.");
     this.navCtrl.pop();
+    
   }
 
 
