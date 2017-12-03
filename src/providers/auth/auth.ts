@@ -6,7 +6,6 @@ import 'rxjs/add/operator/map';
 
 /*
   Generated class for the AuthProvider provider.
-
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
@@ -40,15 +39,6 @@ export class AuthProvider {
           .set(name);
         firebase.database().ref(`/userProfile/${newUser.uid}/phone_number`)
           .set(phone_number);
-
-        firebase.database().ref(`/userProfile/${newUser.uid}/LatLonDiff/lat`)
-          .set(1000);
-        firebase.database().ref(`/userProfile/${newUser.uid}/LatLonDiff/lon`)
-          .set(1000);
-        firebase.database().ref(`/userProfile/${newUser.uid}/LatLonDiff/meetingCode`)
-          .set('');
-
-
       }).catch(error => console.error(error));
   }
 

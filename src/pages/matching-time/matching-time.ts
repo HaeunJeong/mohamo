@@ -340,25 +340,7 @@ export class MatchingTimePage {
       }
     
     }
-  }).then(function(res){
-    var sun_date_ = getThis.schedules_sun[0].date.split('_');
-    var mon_date_ = getThis.schedules_mon[0].date.split('_');
-    var tue_date_ = getThis.schedules_tue[0].date.split('_');
-    var wed_date_ = getThis.schedules_wed[0].date.split('_');
-    var thu_date_ = getThis.schedules_thu[0].date.split('_');
-    var fri_date_ = getThis.schedules_fri[0].date.split('_');
-    var sat_date_ = getThis.schedules_sat[0].date.split('_');
-
-    getThis.sun_date = sun_date_[1] + '일';
-    getThis.mon_date = mon_date_[1] + '일';
-    getThis.tue_date = tue_date_[1] + '일';
-    getThis.wed_date = wed_date_[1]+ '일';
-    getThis.thu_date = thu_date_[1]+ '일';
-    getThis.fri_date = fri_date_[1]+ '일';
-    getThis.sat_date = sat_date_[1]+ '일';
-
   });
-
 
     
   }
@@ -383,7 +365,6 @@ export class MatchingTimePage {
       schedule.isSelected = false;
 
     }
-
     console.log(getThis.selected_time);
   }
 
@@ -466,7 +447,7 @@ export class MatchingTimePage {
 
     var end_time = time_table.indexOf(getThis.selected_time[getThis.selected_time.length-1].time) + 1;
     var selected_meeting_time = new Date().getMonth() + 1 +'월 '+getThis.selected_time[0].date+'일 '+getThis.selected_time[0].time+
-    '-'+time_table[end_time];
+    '-'+getThis.selected_time[getThis.selected_time.length-1].time;
     
 
     var new_time = firebase.database().ref('/allMeeting/'+this.meeting_code).child('infoToMeet').push(true).key;
