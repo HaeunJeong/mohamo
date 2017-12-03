@@ -64,6 +64,7 @@ export class RulePage {
     })
     this.member_name = m_name;
     console.log('dfdf');
+    console.log('dfd');
 
     /*
       var penalty_score_temp = [];
