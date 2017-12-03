@@ -193,7 +193,7 @@ export class RulePage {
     //멤버마다 데이터로 현재 벌점 수치 확인하기(아직 진행중)
     var ex; 
     ex = {name: 'aa', data: [this.example2, 0, 4]};
-
+/*
     this.chartOptions = {
       chart: {
         type: 'bar'
@@ -214,7 +214,7 @@ export class RulePage {
         //console.log("과연?:", ex),
         {name: 'Max', data: [10, 10, 10]}
       ]
-    }
+    }*/
   }
 
   
