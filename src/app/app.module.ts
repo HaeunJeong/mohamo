@@ -30,6 +30,7 @@ import * as highcharts from 'Highcharts';
 import { MypageSchedulePage } from '../pages/mypage-schedule/mypage-schedule';
 import { SetSchedulePage } from '../pages/set-schedule/set-schedule';
 import { SetTodoPage } from '../pages/set-todo/set-todo'
+import { ShowHistoryPage } from '../pages/show-history/show-history';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyCjOFpcA7N5PMu6TRb9V9o9IcEtRF2Rxp0",
@@ -51,7 +52,8 @@ export const firebaseConfig = {
     MemberinfoPage,
     MypageSchedulePage,
     SetSchedulePage,
-    SetTodoPage
+    SetTodoPage,
+    ShowHistoryPage
   ],
   imports: [
     BrowserModule,
@@ -72,7 +74,8 @@ export const firebaseConfig = {
     MemberinfoPage,
     MypageSchedulePage,
     SetSchedulePage,
-    SetTodoPage
+    SetTodoPage,
+    ShowHistoryPage
   ],
   providers: [
     StatusBar,

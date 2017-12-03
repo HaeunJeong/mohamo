@@ -69,6 +69,7 @@ export class MeetingListPage {
       //firebase.database().ref('/allMeeting/'+newMeetingKey).child('member').child(this.userId).child('personal_penalty').set(0);
       firebase.database().ref('/allMeeting/'+newMeetingKey+'/member/'+ this.userId).child('personal_penalty').set(0);
       firebase.database().ref('/allMeeting/'+newMeetingKey).child('title').set(meeting_title);
+      firebase.database().ref('/allMeeting/'+newMeetingKey).child('leader').set({userId:this.userId});
 
       this.ionViewDidEnter();
       
@@ -142,6 +143,12 @@ export class MeetingListPage {
     var dayOf12 = ['Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu'];
    
     
+
+    var month = new Date().getMonth() + 1;
+    var monthOrder = [];
+    if(month==12)
+      monthOrder = dayOf12;
+    
     var getThis = this;
     getThis.userId = firebase.auth().currentUser.uid;
     firebase.database().ref('/userProfile/' + getThis.userId + '/schedule').once('value', function (snapshot) {
@@ -149,43 +156,43 @@ export class MeetingListPage {
       if (snapshot.val() == null) {
         console.log('생성댐'); //회원가입할때 넣기!
 
-        for (var date = 1; date <= 30; date++) {
-          for (var alltime = 1; alltime <= 9; alltime++) {
-            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-              .child('y_17').child('m_11').child('d_' + date.toString())
-              .child(dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '00').set(false);
-            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-              .child('y_17').child('m_11').child('d_' + date.toString())
-              .child(dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '30').set(false);
-          }
-          for (var alltime = 10; alltime <= 24; alltime++) {
-            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-              .child('y_17').child('m_11').child('d_' + date.toString())
-              .child(dayOf11[(date - 1) % 7]).child(alltime + ':' + '00').set(false);
-            firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-              .child('y_17').child('m_11').child('d_' + date.toString())
-              .child(dayOf11[(date - 1) % 7]).child(alltime + ':' + '30').set(false);
-            //getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '00', value: false });
+        // for (var date = 1; date <= 30; date++) {
+        //   for (var alltime = 1; alltime <= 9; alltime++) {
+        //     firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+        //       .child('y_17').child('m_11').child('d_' + date.toString())
+        //       .child(dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '00').set(false);
+        //     firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+        //       .child('y_17').child('m_11').child('d_' + date.toString())
+        //       .child(dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '30').set(false);
+        //   }
+        //   for (var alltime = 10; alltime <= 24; alltime++) {
+        //     firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+        //       .child('y_17').child('m_11').child('d_' + date.toString())
+        //       .child(dayOf11[(date - 1) % 7]).child(alltime + ':' + '00').set(false);
+        //     firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
+        //       .child('y_17').child('m_11').child('d_' + date.toString())
+        //       .child(dayOf11[(date - 1) % 7]).child(alltime + ':' + '30').set(false);
+        //     //getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '00', value: false });
 
-            // getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '30', value: false });
-          }
-        }
+        //     // getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '30', value: false });
+        //   }
+        // }
         for (var date = 1; date <= 31; date++) {
           for (var alltime = 1; alltime <= 9; alltime++) {
             firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-              .child('y_17').child('m_12').child('d_' + date.toString())
-              .child(dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '00').set(false);
+              .child('y_17').child('m_'+month).child('d_' + date.toString())
+              .child(monthOrder[(date - 1) % 7]).child('0' + alltime + ':' + '00').set(true);
             firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-              .child('y_17').child('m_12').child('d_' + date.toString())
-              .child(dayOf11[(date - 1) % 7]).child('0' + alltime + ':' + '30').set(false);
+              .child('y_17').child('m_'+month).child('d_' + date.toString())
+              .child(monthOrder[(date - 1) % 7]).child('0' + alltime + ':' + '30').set(true);
           }
           for (var alltime = 10; alltime <= 24; alltime++) {
             firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-              .child('y_17').child('m_12').child('d_' + date.toString())
-              .child(dayOf11[(date - 1) % 7]).child(alltime + ':' + '00').set(false);
+              .child('y_17').child('m_'+month).child('d_' + date.toString())
+              .child(monthOrder[(date - 1) % 7]).child(alltime + ':' + '00').set(false);
             firebase.database().ref('/userProfile/' + getThis.userId + '/schedule')
-              .child('y_17').child('m_12').child('d_' + date.toString())
-              .child(dayOf11[(date - 1) % 7]).child(alltime + ':' + '30').set(false);
+              .child('y_17').child('m_'+month).child('d_' + date.toString())
+              .child(monthOrder[(date - 1) % 7]).child(alltime + ':' + '30').set(false);
             //getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '00', value: false });
 
             // getThis.m_11.push({ date: 'd_' + date.toString(), day: getThis.dayOf11[(date - 1) % 7], time: alltime + ':' + '30', value: false });

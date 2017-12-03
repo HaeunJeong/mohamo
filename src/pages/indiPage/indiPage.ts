@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FirebaseListObservable, AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
 import * as firebase from 'firebase';
 import { Geolocation } from '@ionic-native/geolocation';
 import { CurrentLoc } from '../../app/interfaces/current-loc';
 import { MatchingTimePage } from '../matching-time/matching-time';
 import { RulePage } from '../rule/rule';
-import { MemberinfoPage } from '../memberinfo/memberinfo';
 
+import { ShowHistoryPage } from '../show-history/show-history';
+import { MemberinfoPage } from '../memberinfo/memberinfo';
+import { MeetingListPage } from '../meeting-list/meeting-list';
 @Component({
   selector: 'page-indiPage',
   templateUrl: 'indiPage.html'
@@ -28,12 +29,16 @@ export class IndiPagePage {
   userId: string;
   myCurrentLoc: CurrentLoc = { lat: 0, lon: 0 };
 
+
   meetingCode: string;
   meetingTitle: string = null;
   geo;
   init_score = null;
   ppp_ttt;
   
+
+  leader: string;
+
   constructor(
     public navCtrl: NavController,
     public af: AngularFireDatabase,
@@ -45,9 +50,26 @@ export class IndiPagePage {
     this.geo = this.geolocation;
   
 
-    //this.navCtrl.push(RulePage, {godata: this.meetingCode});//rulepage로 데이터 이동
+    this.af.database.ref('/allMeeting/' + this.meetingCode + '/leader').once('value', (snapshot) => {
+      //리더 id 얻기
+      
+      snapshot.forEach(snap => {
+        console.log(snap.val());
+        this.af.database.ref('/userProfile/' + snap.val()).once('value', (snapshot) => {
+          snapshot.forEach(snap2 => {
+            if (snap2.key == 'name') {
+              this.leader = snap2.val();
+              return false;
+            }
+          });
+        });
+
+        return false;
+      })
+    });
+
     let dataURL = this.af.database;
-    console.log("meetingcode", this.meetingCode)
+
     //미팅 이름 얻기 OK
     dataURL.ref('/allMeeting').once('value', (snapshot) => {
       snapshot.forEach(snap => {
@@ -97,6 +119,43 @@ export class IndiPagePage {
 
     //해당 모임 약속 시간 정보 가져오기 OK
     this.meetingInfo = af.list('/allMeeting/' + this.meetingCode + '/infoToMeet');
+
+    //각 미팅별 month, day 체크=> 현재보다 지난 meeting일시 done 넣어주면서 화면에서 안 보이도록 만든다.
+    this.meetingInfo.subscribe(
+      meetArray => {
+        var today = new Date();
+        meetArray.forEach(meetInfo => {
+
+          if (meetInfo.done == 'n') {
+            var meetDateTemp1 = meetInfo.dateTime.split("월 ");
+            var meetDateTemp2 = meetDateTemp1[1].split("일 ");
+            var meetDateTemp3 = meetDateTemp2[1].split("-");
+            var meetDateTemp4 = meetDateTemp3[1].split(":");
+
+            var meetInfoMonth = meetDateTemp1[0];
+            var meetInfoDay = meetDateTemp2[0];
+            var meetInfoEndHr = meetDateTemp4[0];
+            var meetInfoEndMin = meetDateTemp4[1];
+
+            var todayMonth = today.getMonth() + 1;
+            var todayDay = today.getDate();
+            var TodayHr = today.getHours();
+            var TodayMin = today.getMinutes();
+
+
+            if (meetInfo.done == 'n' &&
+              ((todayMonth > meetInfoMonth) ||
+                (todayMonth == meetInfoMonth && todayDay > meetInfoDay) ||
+                (todayMonth == meetInfoMonth && todayDay == meetInfoDay && TodayHr > meetInfoEndHr) ||
+                (todayMonth == meetInfoMonth && todayDay == meetInfoDay && TodayHr == meetInfoEndHr && TodayMin > meetInfoEndMin))) {
+              this.af.database.ref('/allMeeting/' + this.meetingCode + '/infoToMeet/' + meetInfo.$key + '/').update({ done: 'y' });
+            }
+          }
+        });
+
+      }
+
+    );
   }
 
 
@@ -132,20 +191,20 @@ export class IndiPagePage {
 
         snapshot.forEach(snap => {
 
-          if (snap.val().dateTime.indexOf(yyyy + "-" + mm + "-" + dd) != -1) {
-
+          if (snap.val().done == 'n' && snap.val().dateTime.indexOf(mm + "월 " + dd + "일") != -1) {
             // 있으면 미팅 장소 좌표 얻어오기. 
             mtLat = snap.val().LatLon.lat;
             mtLon = snap.val().LatLon.lon;
 
+            //12월 3일 15:00-17:00
             //정해진 미팅시간 받아오기. 
-            var dtSplit = snap.val().dateTime.split(" ");
-            var dSplit = dtSplit[0].split("-");
-            var tSplit = dtSplit[1].split(":");
-            meetingDate = new Date(dSplit[0], dSplit[1], dSplit[2], tSplit[0], tSplit[1]);
-            timeLeft = (meetingDate.getTime() - todayTemp.getTime()) / 60000;
+            var dtSplit = snap.val().dateTime.split("일 ");
+            var dSplit = dtSplit[0].split("월 ");
+            var tSplitTmp = dtSplit[1].split("-");
+            var tSplit = tSplitTmp[0].split(":");
 
-            alert("해당 모임은 오늘 약속이 있습니다.");
+            meetingDate = new Date(2017, dSplit[0], dSplit[1], tSplit[0], tSplit[1]);
+            timeLeft = (meetingDate.getTime() - todayTemp.getTime()) / 60000;
 
             meetingNum++;
             return false;
@@ -153,11 +212,11 @@ export class IndiPagePage {
         });
 
         if (meetingNum == 0) {
-          alert("해당 모임은 오늘 약속이 없습니다.");
+          alert("해당 모임은 오늘 예정된 미팅이 없습니다.");
+          //return false;
+        } else {
+          alert("해당 모임은 오늘 예정된 약속이 " + meetingNum + "개 있습니다.");
         }
-
-        return false;
-
       }).then(result => {
 
         if (meetingNum != 0) {
@@ -176,7 +235,6 @@ export class IndiPagePage {
               this.myCurrentLoc.lat = pos.coords.latitude;
               this.myCurrentLoc.lon = pos.coords.longitude;
               this.myCurrentLoc.timestamp = pos.timestamp;
-              console.log(this.myCurrentLoc.lat, this.myCurrentLoc.lon)
               return 1;
 
             }).then(temp => {
@@ -192,6 +250,7 @@ export class IndiPagePage {
                   meetingCode: this.meetingCode
                   //출석 로그 남기기 ->해야 해. 
                 });
+                alert("출석처리 되었습니다");
                 return false;
               }
             });
@@ -271,8 +330,6 @@ export class IndiPagePage {
 
 
   removeMember() {
-    let intoToDelete = this.af.database.ref('/allMeeting/' + this.meetingCode + '/memToBeDeleted');
-    let memTobeDeleted: FirebaseObjectObservable<any[]>;
     let toBeDeleted: string = prompt("누굴 삭제할까요");
 
     if (toBeDeleted == null) {
@@ -290,7 +347,6 @@ export class IndiPagePage {
     this.mtMemList.forEach(mtMem => {
       if (toBeDeleted == mtMem[0].name) {
         exist = true;
-        //alert("다른 멤버가 승인시 삭제가 완료됩니다.");
       }
     });
 
@@ -299,39 +355,32 @@ export class IndiPagePage {
       return false;
     }
 
-    //해당 멤버 존재시, DB에 삭제 요청 등록
-    //한 명의 삭제가 끝나기 전까지 다른 멤버 삭제 불가.(일단은)
-    intoToDelete.once('value', (snapshot) => {
-      if (!snapshot.exists()) {
-        let reasonForDel: string = prompt("삭제 이유를 입력하세요.");
-
-        intoToDelete.push({ who: toBeDeleted, reason: reasonForDel, agreeCur: this.mtMemList.length - 1, agreeMax: 0 });
-        /*
-        snapshot.forEach(snap => {
-          if (snap.val().name == toBeDeleted) {
-            memTobeDeleted = this.af.object('/member/' + snap.key);
-            //memTobeDeleted.remove();
-            return false;
-          }
-        });*/
-        alert("다른 멤버가 승인시 삭제가 완료됩니다.");
-      } else {
-        alert("기존 멤버 삭제가 진행중입니다.\n해당 건이 끝난후 신청바랍니다.")
+    var leaderCheck = this.af.database.ref('/allMeeting/' + this.meetingCode + '/leader');
+    var amILeader = "n";
+    leaderCheck.once('value', (snapshot) => {
+      snapshot.forEach(snap => {
+        if (snap.val() == this.userId) {
+          amILeader = "y";
+          return false;
+        }
+      })
+    }).then(result => {
+      if (amILeader == "y") {
+        this.af.database.ref('/userProfile').once('value', (snapshot) => {
+          snapshot.forEach(snap => {
+            if (snap.val().name == toBeDeleted) {
+              this.af.object('/allMeeting/' + this.meetingCode + '/member/' + snap.key).remove();
+              this.af.object('/userProfile/' + snap.key + '/m_list/' + this.meetingCode).remove();
+              return false;
+            }
+          });
+        });
+        alert(toBeDeleted + "(이)가 삭제 되었습니다.");
+      }
+      else {
+        alert("방장만 멤버 삭제가 가능합니다.");
       }
     })
-
-    /*
-    test.ref('/allMeeting/'+this.meetingCode).once('value', (snapshot) => {
-      if (snapshot.exists()) {
-        snapshot.forEach(snap => {
-          if (snap.val().name == toBeDeleted) {
-            memTobeDeleted = this.af.object('/member/' + snap.key);
-            //memTobeDeleted.remove();
-            return false;
-          }
-        });
-      }
-    });*/
   }
 
   goEditMeetingInfoPage() {
@@ -348,7 +397,21 @@ export class IndiPagePage {
 
   GoMemInfo(mtMem) {
     console.log("a: ", mtMem[0].$key)//예ㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖㅖ
-    this.navCtrl.push(MemberinfoPage, { gogodata: mtMem[0].$key });
+    this.navCtrl.push(RulePage, { godata: this.meetingCode }, { animate: false });
+  }
+
+  goHistoryPage() {
+    this.navCtrl.push(ShowHistoryPage, { meetingCode: this.meetingCode, meetingTitle: this.meetingTitle });
+  }
+
+  getOut() {
+    if (confirm("미팅을 나가시겠습니까?")) {
+      var idToDel = this.af.object('/allMeeting/' + this.meetingCode + '/member/' + this.userId);
+      idToDel.remove();
+      var meetingToDel = this.af.object('/userProfile/' + this.userId + '/m_list/' + this.meetingCode);
+      meetingToDel.remove();
+      this.navCtrl.push(MeetingListPage);
+    }
   }
 
 }
