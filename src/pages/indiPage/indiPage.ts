@@ -34,7 +34,7 @@ export class IndiPagePage {
   geo;
   init_score = null;
   ppp_ttt;
-  
+
 
   leader: string;
 
@@ -47,11 +47,11 @@ export class IndiPagePage {
     this.userId = firebase.auth().currentUser.uid;
     this.meetingCode = navParams.data;
     this.geo = this.geolocation;
-  
+
 
     this.af.database.ref('/allMeeting/' + this.meetingCode + '/leader').once('value', (snapshot) => {
       //리더 id 얻기
-      
+
       snapshot.forEach(snap => {
         console.log(snap.val());
         this.af.database.ref('/userProfile/' + snap.val()).once('value', (snapshot) => {
@@ -257,73 +257,33 @@ export class IndiPagePage {
         }
       });
 
-      
-      
-      
-      var example = 13;
-      var personal = 0;
       //벌점 체크하기
-      var temp1
+      var lateMin = null;
       firebase.database().ref('/allMeeting/' + this.meetingCode + '/setting_late').once('value').then(function (snapshot) {
         snapshot.forEach(function (childSnap1) {
-          temp1 = childSnap1.val();
-          console.log("분당temp1:", temp1)
+          lateMin = childSnap1.val();
+          console.log("분 체크:", lateMin);
         })
-      })
-      this.ppp_ttt = temp1;
-      console.log("etetete", this.ppp_ttt)
-      
+      });
+    
+      //개인 벌점 계산
       var person_penalty
       firebase.database().ref('/allMeeting/' + this.meetingCode + '/member/' + this.userId + '/personal_penalty').once('value', function (snapshot2) {
         person_penalty = snapshot2.val();
-        console.log("개인벌점:", person_penalty)
+        console.log("개인벌점:", person_penalty);
+      });
+
+      //총 벌점 계산
+      var lateMin2 = lateMin.split("분");
+      person_penalty += timeLeft/lateMin2[0];
+      console.log("total: ",person_penalty);
+
+      this.af.database.ref('/allMeeting/' + this.meetingCode + '/infoToMeet').once('value',(snapshot)=>{
+        snapshot.forEach(snap=>{
+
+        })
       })
-      
-
-
-      
-      if(temp1 == "1분")
-      {
-          person_penalty += timeLeft;
-      }
-      if(temp1 == "5분")
-      {
-        person_penalty += timeLeft/5;
-      }
-      if(temp1 == "10분")
-      {
-        person_penalty += timeLeft/10;
-      }
-      if(temp1 == "15분")
-      {
-        person_penalty += timeLeft/15;
-      }
-      if(temp1 == "20분")
-      {
-        person_penalty += timeLeft/20;
-      }
-      if(temp1 == "30분")
-      {
-        person_penalty += timeLeft/30;
-      }
-  
-
-  
-      if (this.ppp_ttt == "1분") {
-        personal += example;
-        console.log("결과: ", personal)
-        console.log("etetete2", this.ppp_ttt)
-      }
-
-
-
-
-
-
-
-
-
-    } 
+    }
   }
 
 
