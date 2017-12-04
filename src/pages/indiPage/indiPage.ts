@@ -38,6 +38,8 @@ export class IndiPagePage {
 
   leader: string;
 
+  
+
   constructor(
     public navCtrl: NavController,
     public af: AngularFireDatabase,
@@ -115,7 +117,6 @@ export class IndiPagePage {
     );
 
 
-
     //해당 모임 약속 시간 정보 가져오기 OK
     this.meetingInfo = af.list('/allMeeting/' + this.meetingCode + '/infoToMeet');
 
@@ -140,14 +141,47 @@ export class IndiPagePage {
             var todayDay = today.getDate();
             var TodayHr = today.getHours();
             var TodayMin = today.getMinutes();
-
+            var absPenalty = 0;
+            var userTotalPenalty;
 
             if (meetInfo.done == 'n' &&
               ((todayMonth > meetInfoMonth) ||
                 (todayMonth == meetInfoMonth && todayDay > meetInfoDay) ||
                 (todayMonth == meetInfoMonth && todayDay == meetInfoDay && TodayHr > meetInfoEndHr) ||
                 (todayMonth == meetInfoMonth && todayDay == meetInfoDay && TodayHr == meetInfoEndHr && TodayMin > meetInfoEndMin))) {
-              this.af.database.ref('/allMeeting/' + this.meetingCode + '/infoToMeet/' + meetInfo.$key + '/').update({ done: 'y' });
+              this.af.database.ref('/allMeeting/' + this.meetingCode + '/infoToMeet/' + meetInfo.$key + '/').update({ done: 'y' })
+
+                .then(result => {
+                  //미팅 종료 시간이 지나는 순간까지 안 오는 멤버는 결석처리!
+                  this.af.database.ref('/allMeeting/' + this.meetingCode + '/penalty_absence').once('value', (getAbsencePenalty) => {
+                    absPenalty = parseInt(getAbsencePenalty.val().split('점'));
+                  })
+
+                    .then(result => {
+
+
+                      //개인의 현재 미팅 내 총 벌점 계산
+                      firebase.database().ref('/allMeeting/' + this.meetingCode + '/member/' + this.userId + '/personal_penalty').once('value', function (snapshot2) {
+                        userTotalPenalty = snapshot2.val();
+                      })
+
+                        .then(result => {
+                          this.af.database.ref('/allMeeting/' + this.meetingCode + '/infoToMeet/' + meetInfo.$key + '/attendanceLog').once('value', (snapshot) => {
+                            snapshot.forEach(snap => {
+                              if (snap.val() == false) {
+                                this.af.database.ref('/allMeeting/' + this.meetingCode + '/infoToMeet/' + meetInfo.$key + '/attendanceLog/' + snap.key).child('attLog').set('결석: 벌점 ' + absPenalty + '점');
+                                firebase.database().ref('/allMeeting/' + this.meetingCode).child('member').child(this.userId).set({ personal_penalty: (absPenalty + userTotalPenalty) });
+                              }
+                              return false;
+                            });
+                          })
+                        });
+
+
+
+                    })
+
+                });
             }
           }
         });
@@ -185,12 +219,17 @@ export class IndiPagePage {
 
       var meetingNum = 0;
 
+      //특정 모임 내의 약속 정보에 대한 코드
+      var indiMeetCode;
+
       //오늘 날짜에 해당하는 미팅이 있는지 확인
       DBurl.ref('/allMeeting/' + this.meetingCode + '/infoToMeet').once('value', (snapshot) => {
 
         snapshot.forEach(snap => {
 
           if (snap.val().done == 'n' && snap.val().dateTime.indexOf(mm + "월 " + dd + "일") != -1) {
+            indiMeetCode = snap.key;
+
             // 있으면 미팅 장소 좌표 얻어오기. 
             mtLat = snap.val().LatLon.lat;
             mtLon = snap.val().LatLon.lon;
@@ -221,8 +260,8 @@ export class IndiPagePage {
         if (meetingNum != 0) {
           //지각 여부 체크
           if (timeLeft < 0) {
-            alert("당신은 " + Math.abs(timeLeft) + "분 지각하셨습니다.");
-
+            //지각로그 남기기
+            this.leaveLog(timeLeft, indiMeetCode);
           }
           else if (timeLeft > 10) {
             alert("출석은 모임 시간 10분 전 부터 가능합니다.");
@@ -247,9 +286,9 @@ export class IndiPagePage {
                   lat: Math.abs(this.myCurrentLoc.lat - mtLat),
                   lon: Math.abs(this.myCurrentLoc.lon - mtLon),
                   meetingCode: this.meetingCode
-                  //출석 로그 남기기 ->해야 해. 
                 });
-                alert("출석처리 되었습니다");
+                //출석 로그 남기기
+                this.leaveLog(timeLeft, indiMeetCode);
                 return false;
               }
             });
@@ -257,36 +296,59 @@ export class IndiPagePage {
         }
       });
 
-      //벌점 체크하기
-      var lateMin = null;
-      firebase.database().ref('/allMeeting/' + this.meetingCode + '/setting_late').once('value').then(function (snapshot) {
-        snapshot.forEach(function (childSnap1) {
-          lateMin = childSnap1.val();
-          console.log("분 체크:", lateMin);
-        })
-      });
-    
-      //개인 벌점 계산
-      var person_penalty
-      firebase.database().ref('/allMeeting/' + this.meetingCode + '/member/' + this.userId + '/personal_penalty').once('value', function (snapshot2) {
-        person_penalty = snapshot2.val();
-        console.log("개인벌점:", person_penalty);
-      });
-
-      //총 벌점 계산
-      var lateMin2 = lateMin.split("분");
-      person_penalty += timeLeft/lateMin2[0];
-      console.log("total: ",person_penalty);
-
-      this.af.database.ref('/allMeeting/' + this.meetingCode + '/infoToMeet').once('value',(snapshot)=>{
-        snapshot.forEach(snap=>{
-
-        })
-      })
     }
   }
 
+  leaveLog(timeLeft: number, indiMeetCode: string) {
+    //벌점 체크하기
+    var lateMin = null;
+    var userTotalPenalty = 0;
+    var penalty = 0;
+    var lateMin2 = 0;
 
+
+    //몇 분 지각당 벌점 1점씩 올라가는지.
+    this.af.database.ref('/allMeeting/' + this.meetingCode + '/').once('value', (snapshot) => {
+      snapshot.forEach(snap => {
+        if (snap.key == 'setting_late') {
+          lateMin = snap.val();
+        }
+        return false;
+      })
+    }).then(result => {
+      lateMin2 = parseInt(lateMin.split("분"));
+
+      //개인의 현재 미팅 내 총 벌점 계산
+      firebase.database().ref('/allMeeting/' + this.meetingCode + '/member/' + this.userId + '/personal_penalty').once('value', function (snapshot2) {
+        userTotalPenalty = snapshot2.val();
+      });
+
+    }).then(result => {
+      if (timeLeft >= 0)
+        userTotalPenalty = userTotalPenalty
+      else {
+        penalty = Math.floor(Math.abs(timeLeft) / lateMin2);
+        userTotalPenalty += penalty;
+      }
+    }).then(result => {
+      this.af.database.ref('/allMeeting/' + this.meetingCode + '/infoToMeet/' + indiMeetCode + '/attendanceLog/' + this.userId).once('value', (snapshot) => {
+        //아직 출석 기록이 없을 경우
+        if (snapshot.val() == false) {
+          if (timeLeft >= 0) {
+            this.af.database.ref('/allMeeting/' + this.meetingCode + '/infoToMeet/' + indiMeetCode + '/attendanceLog/' + this.userId).child('attLog').set('출석');
+            alert("출석처리 되었습니다");
+          } else {
+            this.af.database.ref('/allMeeting/' + this.meetingCode + '/infoToMeet/' + indiMeetCode + '/attendanceLog/' + this.userId).child('attLog').set('지각 ' + Math.abs(timeLeft) + '분: 벌점 ' + penalty + '점');
+            firebase.database().ref('/allMeeting/' + this.meetingCode).child('member').child(this.userId).set({ personal_penalty: userTotalPenalty });
+            alert("당신은 " + Math.abs(timeLeft) + "분 지각하셨습니다.");
+          }
+          //이미 출석 한 경우
+        } else {
+          alert("이미 출석체크를 하셨습니다.");
+        }
+      });
+    })
+  }
 
   removeMember() {
     let toBeDeleted: string = prompt("누굴 삭제할까요");

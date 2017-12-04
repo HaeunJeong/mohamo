@@ -14,13 +14,28 @@
 
 <ion-content padding>
 
-  <h1>지난 모임 리스트</h1>
-  <div *ngFor="let mInfo of meetingInfo |async">
+  <h1>지난 모임 출석부</h1>
+  <!-- <div *ngFor="let mInfo of meetingInfo |async">
     <p *ngIf="mInfo.done=='y'">
-      {{mInfo.place}}<br> {{mInfo.dateTime}}
+      {{mInfo.place}}<br> 
+      {{mInfo.dateTime}}<br>
     </p>
   </div>
 
   <h1>멤버 로그</h1>
-  <p>정하은: 출석입니다.</p>
+  <p>정하은: 출석입니다.</p>-->
+
+  <div *ngFor="let mtIndi of meetInfoIndi">
+    장소: {{mtIndi.place}}<br> 
+    시간: {{mtIndi.date}} <br><br>
+    
+    <div *ngFor="let indi of mtIndi.logs">
+      {{indi.name}} : {{indi.memLog}}
+    </div>
+  </div>
+
+  <h1>회원별 현재 벌점 내역</h1>
+  <div *ngFor="let indiTotal of showTotalPt">
+    {{indiTotal.name}} : {{indiTotal.totalPt}}<br>
+  </div>
 </ion-content>
